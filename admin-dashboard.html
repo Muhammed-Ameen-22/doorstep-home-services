@@ -1,0 +1,82 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="stylesheets/bootstrap.css" rel="stylesheet">
+    <link href="stylesheets/admin-dashboard.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"> <img class="logo-img" src="images/logo.png"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link"> Hi, Admin</a>
+                    </li>
+                   
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"> Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        </nav>
+        <br> <br> <br> <br> <br>
+    <div class="container mt-40">
+        <div class="row mt-30">
+            <div class="col-md-4 col-sm-6">
+                <a href="admin-tables.php?id=cust">
+                <div class="box5">
+                    
+                    <img src="images/customer.png" alt="">
+                    <!-- <ul class="icon">
+                        <li><a href="#" class="fa fa-search"></a></li>
+                        <li><a href="#" class="fa fa-link"></a></li>
+                    </ul> -->
+                    <div class="box-content">
+                        <h2 class="title">Customers</h2>
+                    </div>
+                </div></a>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <a href="admin-tables.php?id=sp">
+                <div class="box5">
+                    <img src="images/service-provider.jpg" alt="">
+                    <!-- <ul class="icon">
+                        <li><a href="#" class="fa fa-search"></a></li>
+                        <li><a href="#" class="fa fa-link"></a></li>
+                    </ul> -->
+                    <div class="box-content">
+                        <h2 class="title">Service Providers</h2>
+                        
+                    </div>
+                </div>
+                </a>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <a href="admin-tables.php?id=trans">
+                <div class="box5">
+                    <img src="images/transaction.jpg" alt="">
+                    <!-- <ul class="icon">
+                        <li><a href="#" class="fa fa-search"></a></li>
+                        <li><a href="#" class="fa fa-link"></a></li>
+                    </ul> -->
+                    <div class="box-content">
+                        <h2 class="title">Transactions</h2>
+                        
+                    </div>
+                </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>

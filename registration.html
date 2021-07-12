@@ -8,85 +8,108 @@
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
    </head>
 <body>
+  <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#"> <img class="logo-img" src="images/logo.png"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="index.php"> Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"> My Requests</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"> About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"> Contact </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav> -->
   <div class="container">
     <div class="title">Registration</div>
     <div class="content">
-      <form action="#">
+      <form action="reg-success.php" method="POST">
+        <div class="gender-details">
+          <input type="radio" value="sp" name="user" id="dot-1" onclick="visService()"checked="checked" >
+          <input type="radio" value="cust" name="user" id="dot-2" onclick="hideService()">
+          <span class="gender-title">I am</span>
+          <div class="category">
+            <label for="dot-1">
+              <span class="dot one"></span>
+              <span  class="gender">Service Provider</span> 
+          </label>
+          <label for="dot-2">
+            <span class="dot two"></span>
+            <span  class="gender">Customer</span>
+            
+          </label>
+          </div>
+        </div>
         <div class="user-details">
           <div class="input-box">
             <span class="details">First Name</span>
-            <input type="text" placeholder="Enter your first name" required>
+            <input type="text" name="fname" placeholder="Enter your first name" required>
           </div>
           <div class="input-box">
             <span class="details">Last Name</span>
-            <input type="text" placeholder="Enter your last name" required>
+            <input type="text" name="lname" placeholder="Enter your last name" required>
           </div>
           <div class="input-box">
             <span class="details">House</span>
-            <input type="text" placeholder="Enter your house name" required>
+            <input type="text" name="house" placeholder="Enter your house name" required>
           </div>
           <div class="input-box">
             <span class="details">City</span>
-            <input type="text" placeholder="Enter your city" required>
+            <input type="text" name="city" placeholder="Enter your city" required>
         </div>
             <div class="input-box">
                 <span class="details">District</span>
-                <input type="text" placeholder="Enter your district" required>
+                <input type="text" name="district" placeholder="Enter your district" required>
               </div>
           
           <div class="input-box">
             <span class="details">Pincode</span>
-            <input type="text" placeholder="Enter your Pincode" required>
+            <input type="text" name="pincode" placeholder="Enter your Pincode" required>
           </div>
           <div class="input-box">
             <span class="details">Email</span>
-            <input type="text" placeholder="Enter your email" required>
+            <input type="text" name="email" placeholder="Enter your email" required>
           </div>
           <div class="input-box">
             <span class="details">Phone Number</span>
-            <input type="text" placeholder="Enter your number" required>
+            <input type="text" name="phno" placeholder="Enter your number" required>
           </div>
           <div class="input-box">
             <span class="details">Password</span>
-            <input type="text" placeholder="Enter your password" required>
+            <input type="password" name="password" placeholder="Enter your password" required>
           </div>
           <div class="input-box">
             <span class="details">Confirm Password</span>
-            <input type="text" placeholder="Confirm your password" required>
+            <input type="password" placeholder="Confirm your password" >
           </div>
         </div>
-        <div class="gender-details">
-          <input type="radio" name="gender" id="dot-1">
-          <input type="radio" name="gender" id="dot-2">
-          <input type="radio" name="gender" id="dot-3">
-          <span class="gender-title">Gender</span>
-          <div class="category">
-            <label for="dot-1">
-            <span class="dot one"></span>
-            <span class="gender">Male</span>
-          </label>
-          <label for="dot-2">
-            <span class="dot two"></span>
-            <span class="gender">Female</span>
-          </label>
-          <label for="dot-3">
-            <span class="dot three"></span>
-            <span class="gender">Prefer not to say</span>
-            </label>
-          </div>
-        </div>
-          <select class="btn btn-primary dropdown-toggle">
+       
+          <select name="service" class="btn btn-primary dropdown-toggle" id=service>
             <div class="dropdown-menu" >
               <option class="dropdown-item" value="" disabled selected hidden>Select Service</option>
-              <option class="dropdown-item" value="Hello">Carpenter</option>
-              <option class="dropdown-item" value="Hello">Electrician</option>
-              <option class="dropdown-item" value="Hello">Mechanic</option>
-              <option class="dropdown-item" value="Hello">Painter</option>
-              <option class="dropdown-item" value="Hello">Plumber</option>
-            </div>
+              <option value=101>Electrician</option>
+              <option value=102>Carpenter</option>
+              <option value=103>Plumber</option>
+              <option value=104>Mechanic</option>
+              <option value=105>Painter</option>
+              </div>
           </select>
+          <script src="javascript/registration.js" type="text/javascript"></script>
         <div class="button">
-          <input type="submit" value="Register">
+          <input type="submit" value="Register" name="submit">
         </div>
       </form>
     </div>

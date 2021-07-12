@@ -1,0 +1,49 @@
+CREATE TABLE `dhs`.`custdetails` (
+  `cust_id` INT NOT NULL AUTO_INCREMENT,
+  `cust_fname` VARCHAR(25) NOT NULL,
+  `cust_lname` VARCHAR(25) NOT NULL,
+  `cust_house` VARCHAR(25) NOT NULL,
+  `cust_city` VARCHAR(25) NOT NULL,
+  `cust_dist` VARCHAR(25) NOT NULL,
+  `cust_pincode` BIGINT(10) NOT NULL,
+  `cust_email` VARCHAR(25) NOT NULL,
+  `cust_pass` VARCHAR(25) NOT NULL,
+  `cust_phno` BIGINT(10) NOT NULL,
+  PRIMARY KEY (`cust_id`));
+
+
+  CREATE TABLE `dhs`.`service` (
+  `s_id` INT NOT NULL AUTO_INCREMENT,
+  `s_name` VARCHAR(25) NOT NULL,
+  PRIMARY KEY (`s_id`));
+
+
+CREATE TABLE `dhs`.`sp_details` (
+  `sp_id` INT NOT NULL AUTO_INCREMENT,
+  `s_id` INT NOT NULL,
+  `sp_username` VARCHAR(25) NOT NULL,
+  `sp_fname` VARCHAR(25) NOT NULL,
+  `sp_lname` VARCHAR(25) NOT NULL,
+  `sp_phone` BIGINT(10) NOT NULL,
+  `sp_house` VARCHAR(25) NOT NULL,
+  `sp_city` VARCHAR(25) NOT NULL,
+  `sp_district` VARCHAR(25) NOT NULL,
+  `sp_pincode` BIGINT(6) NOT NULL,
+  `sp_password` VARCHAR(25) NOT NULL,
+  PRIMARY KEY (`sp_id`, `s_id`),
+  CONSTRAINT `s_id`
+    FOREIGN KEY (`s_id`)
+    REFERENCES `dhs`.`service_details` (`s_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+
+INSERT INTO `dhs`.`sp_details` (`sp_id`, `s_id`, `sp_username`, `sp_fname`, `sp_lname`, `sp_phone`, `sp_house`, `sp_city`, `sp_district`, `sp_pincode`, `sp_password`) VALUES ('1', '101', 'raju123@gmail.com', 'Raju', 'Raj', '9847123123', '11A/12', 'Mattancherry', 'Ernakulam', '682007', '123123');
+INSERT INTO `dhs`.`sp_details` (`sp_id`, `s_id`, `sp_username`, `sp_fname`, `sp_lname`, `sp_phone`, `sp_house`, `sp_city`, `sp_district`, `sp_pincode`, `sp_password`) VALUES ('2', '101', 'sam11@gmail.com', 'Sam', 'Thomas', '8089564578', '12B/147', 'Mattancherry', 'Ernakulam', '682007', '11111');
+INSERT INTO `dhs`.`sp_details` (`sp_id`, `s_id`, `sp_username`, `sp_fname`, `sp_lname`, `sp_phone`, `sp_house`, `sp_city`, `sp_district`, `sp_pincode`, `sp_password`) VALUES ('3', '102', 'mike22@gmail.com', 'Mike', 'Tyson', '8921047891', 'Kalangil House', 'Palluruthy', 'Ernakulam', '682006', '121212');
+
+INSERT INTO `dhs`.`service_details` (`s_id`, `s_name`) VALUES ('101', 'Electrician');
+INSERT INTO `dhs`.`service_details` (`s_id`, `s_name`) VALUES ('102', 'Carpenter');
+INSERT INTO `dhs`.`service_details` (`s_id`, `s_name`) VALUES ('103', 'Plumber');
+INSERT INTO `dhs`.`service_details` (`s_id`, `s_name`) VALUES ('104', 'Mechanic');
+INSERT INTO `dhs`.`service_details` (`s_id`, `s_name`) VALUES ('105', 'Painter');

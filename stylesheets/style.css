@@ -14,8 +14,8 @@ padding-right: 20px ;
 }
 
 .carousel-inner img{
-    width: 100%;
-    height: 100%;
+    width: 100px;
+    height: 600px;
 }
 
 .padding{
@@ -110,7 +110,7 @@ hr.light{
     }
     .modal-open .modal{
       overflow-y: hidden;
-      width:42%;
+      width:30%;
       margin-top: 55px;
       margin-left: 33%;
     }

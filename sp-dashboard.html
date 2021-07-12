@@ -6,8 +6,9 @@
     <title>Home | DHS</title>
     <link href="stylesheets/bootstrap.css" rel="stylesheet">
     <link href="stylesheets/style.css" rel="stylesheet">
+    <link href="stylesheets/animate.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" >
-
+    <link href="stylesheets/sp-dashboard.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Montserrat:300,400,500,700"
         rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -22,7 +23,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
 
         <div class="container-fluid">
-            <a class="navbar-brand" href="#"> <img class="logo-img" src="images/logo.png"></a>
+            <a class="navbar-brand" href="#"> <img class="logo-img" src="images/logo.png"> </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -32,37 +33,48 @@
                         <a class="nav-link" href="#"> Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"> Login</a>
+                        <a class="nav-link" data-toggle="modal" data-target="#modalLoginForm" href="#"> Login</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"> About Us</a>
+                        <a class="nav-link" href="#aboutus"> About us</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"> Contact </a>
+                        <a class="nav-link" href="#contact"> Contact </a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
-    <select class="btn btn-primary dropdown-toggle">
-        <div class="dropdown-menu" >
-          <option class="dropdown-item" value="" disabled selected hidden>Select Service</option>
-          <option class="dropdown-item" value="Hello">Carpenter</option>
-          <option class="dropdown-item" value="Hello">Electrician</option>
-          <option class="dropdown-item" value="Hello">Mechanic</option>
-          <option class="dropdown-item" value="Hello">Painter</option>
-          <option class="dropdown-item" value="Hello">Plumber</option>
-        </div>
-      </select>
-      <div class="input-box">
-        <span class="details">Pincode</span>
-        <input type="text" required>
+<br>
+<div class="req-table mt-100">
+      <table class="table table-hover table-dark">
+        <thead>
+          <tr>
+            <th class="col-1" scope="col">Request ID</th>
+            <th  class="col-2" scope="col">Customer Name</th>
+            <th class ="col-3" scope="col">Requested date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td>Mark</td>
+            <td>Otto</td>
+        
+          </tr>
+          <tr>
+            <th scope="row">2</th>
+            <td>Jacob</td>
+            <td>Thornton</td>
+          
+          </tr>
+          <tr>
+            <th scope="row">3</th>
+            <td colspan="2">Larry the Bird</td>
+        
+          </tr>
+        </tbody>
+      </table>
       </div>
-      <div class="button">
-        <input type="submit" value="Search">
-      </div>  
-      <div class="button">
-        <input type="submit" value="Request Service">
-      </div>  
     </body>
-      </html>
+    </html>
