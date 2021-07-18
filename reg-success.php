@@ -54,6 +54,7 @@ if(isset($_POST["submit"])) {
 <head>
 <link href="stylesheets/cust-dashboard.css" rel="stylesheet">
 <link href="stylesheets/bootstrap.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" >
 	<title>Success | DHS</title>
 </head>
 <body>
@@ -82,6 +83,7 @@ if(isset($_POST["submit"])) {
     </div>
 </div>
 </nav>
+<!-- <i class="fa fa-check" aria-hidden="true"></i> -->
 <h1>Registration Success</h1>
 </body>
 </html>

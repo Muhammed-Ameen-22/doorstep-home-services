@@ -1,4 +1,4 @@
-<!-- <?php
+<?php
 require_once "db-connection.php";
 echo $_SERVER["REQUEST_METHOD"];
 $userType=$_POST["user"];
@@ -98,4 +98,4 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     
     // Close connection
     mysqli_close($conn);
-?> -->
+?> 

@@ -54,11 +54,18 @@ if(isset($_POST["login"])) {
             //     exit();
             //     }
 
-                $sql =  "SELECT * FROM cust_details where cust_username ='".$username."'";
+                $sql =  "SELECT concat(cust_fname,' ',cust_lname) as name,cust_pass,cust_username,cust_id from cust_details where cust_username ='".$username."'";
+
                 $result=mysqli_query($conn,$sql);
+       
                 if(mysqli_num_rows($result)>0){  
                     $row = mysqli_fetch_array($result);
-                    if(password_verify($password,$row['cust_pass'])){        
+        
+                    if(password_verify($password,$row['cust_pass'])){   
+                        session_start();
+                        $_SESSION["name"] = $row['name'];   
+                        $_SESSION["id"] = $row['cust_id']; 
+                        
                         header("location: cust-dashboard.php");
                         exit();
                     }
@@ -237,9 +244,7 @@ if(isset($_POST["login"])) {
                     </label>
                   </div><br>
             </div>
-           
-           
-         
+            
             <div class="field email">
             <div class="input-area">
               <input type="text" placeholder="Email Address" class="email" name="username">

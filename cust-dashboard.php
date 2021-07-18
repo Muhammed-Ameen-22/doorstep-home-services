@@ -1,10 +1,40 @@
 <?php
 require_once "db-connection.php";
 $service_providers_available ="";
-
-if(isset($_POST['service']) && isset($_POST['pincode'])){
+$pincode="";
+session_start();
+$currentUser = $_SESSION["name"];
+if(isset($_POST['book'])){
+    echo "hello";
     $service=$_POST['service'];
     $pincode=$_POST['pincode'];
+    $quantity=$_POST['quantity'];
+   $cust_id = $_SESSION['id'];
+   $req_date =$_POST['req-date'];
+    
+    $sql_insert_request_table = "insert into request_master values(NULL,'$cust_id','$req_date','$quantity')";
+    if(mysqli_query($conn, $sql_insert_request_table)){
+            
+        } else{
+            echo "ERROR: Could not able to execute $sql_insert_request_table. " . mysqli_error($conn);
+        }
+    $sql_last_inserted_id = "SELECT LAST_INSERT_ID() as id";
+    $res = mysqli_query($conn, $sql_last_inserted_id);
+    $last_inserted_id = mysqli_fetch_array($res);
+    $id = $last_inserted_id['id'];
+    $sql_insert_request_child = "insert into request_child values(NULL,$id,'$service','Requested',$pincode)";
+    echo $sql_insert_request_child;
+    if(mysqli_query($conn, $sql_insert_request_child)){
+        header("location: cust-myrequests.html");
+    } else{
+        echo "ERROR: Could not able to execute $sql_insert_request_table. " . mysqli_error($conn);
+    }
+}
+else if(isset($_POST['service']) && isset($_POST['pincode'])){
+   
+    $service=$_POST['service'];
+    $pincode=$_POST['pincode'];
+    $_SESSION['pincode']=$pincode;
     // echo "Hello: $service";
     // echo "Hello: $pincode";
     $sql="select count(*) as count from sp_details where s_id='".$service."' AND sp_pincode='".$pincode."'";
@@ -37,6 +67,8 @@ if(isset($_POST['service']) && isset($_POST['pincode'])){
     // exit();
     // } 
 }
+
+
 ?> 
 
 <html lang="en">
@@ -66,13 +98,13 @@ if(isset($_POST['service']) && isset($_POST['pincode'])){
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="index.php"> Home</a>
+                        <a class="nav-link" href="index.php"> <?php echo "Hi, ".$currentUser; ?></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#"> My Requests</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"> Logout</a>
+                        <a class="nav-link" href="logout.php"> Logout</a>
                     </li>
                 </ul>
             </div>
@@ -90,7 +122,8 @@ if(isset($_POST['service']) && isset($_POST['pincode'])){
 								<div class="col-md-4">
 									<div class="form-group">
 										<span class="form-label">Select Service</span>
-										<select class="form-control" name="service">
+                                       
+										<select class="form-control" name="service" id="service">
                                             <option value=101>Electrician</option>
                                             <option value=102>Carpenter</option>
                                             <option value=103>Plumber</option>
@@ -103,7 +136,7 @@ if(isset($_POST['service']) && isset($_POST['pincode'])){
 								<div class="col-md-4">
 									<div class="form-group">
 										<span class="form-label">Pincode</span>
-										<input class="form-control" type="text" placeholder="Pincode" name="pincode">
+										<input class="form-control" id="pincode" type="text" placeholder="Pincode" name="pincode" value ="<?php echo$pincode ?>">
 									</div>
 								</div>
 								<div class="col-md-4">
@@ -118,12 +151,18 @@ if(isset($_POST['service']) && isset($_POST['pincode'])){
 								<div class="col-md-4">
 									<div class="form-group">
 										<span class="form-label">Quantity</span>
-										<input class="form-control" type="text" placeholder="Quantity">
+										<input class="form-control" type="text" placeholder="Quantity" name="quantity" >
+									</div>
+									</div>
+                                    <div class="col-md-4">
+									<div class="form-group">
+										<span class="form-label">Date</span>
+										<input class="form-control" type="date" name ="req-date">
 									</div>
 									</div>
 								<div class="col-md-4">
 									<div class="form-btn">
-										<button class="submit-btn">Request</button>
+										<button class="submit-btn" name="book">Request</button>
 									</div>
 							</div>
 							</div>
@@ -136,6 +175,8 @@ if(isset($_POST['service']) && isset($_POST['pincode'])){
 	</form>
     </div>
 </body>
-
+<script type="text/javascript">
+  document.getElementById('service').value = "<?php echo $service;?>";
+</script>
 </html>
  

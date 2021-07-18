@@ -47,3 +47,34 @@ INSERT INTO `dhs`.`service_details` (`s_id`, `s_name`) VALUES ('102', 'Carpenter
 INSERT INTO `dhs`.`service_details` (`s_id`, `s_name`) VALUES ('103', 'Plumber');
 INSERT INTO `dhs`.`service_details` (`s_id`, `s_name`) VALUES ('104', 'Mechanic');
 INSERT INTO `dhs`.`service_details` (`s_id`, `s_name`) VALUES ('105', 'Painter');
+
+
+
+CREATE TABLE `dhs`.`request_master` (
+  `rm_id` INT NOT NULL AUTO_INCREMENT,
+  `cust_id` INT NOT NULL,
+  `r_date` DATE NOT NULL,
+  PRIMARY KEY (`rm_id`),
+
+  CONSTRAINT `cust_id`
+    FOREIGN KEY (`cust_id`)
+    REFERENCES `dhs`.`cust_details` (`cust_id`)
+);
+
+
+CREATE TABLE `dhs`.`request_child` (
+  `rc_id` INT NOT NULL AUTO_INCREMENT,
+  `rm_id` INT NOT NULL,
+  `s_id` INT NOT NULL,
+  `r_status` VARCHAR(45) NOT NULL,
+  `location` INT NOT NULL,
+  PRIMARY KEY (`rc_id`),
+
+  CONSTRAINT `rm_id`
+    FOREIGN KEY (`rm_id`)
+    REFERENCES `dhs`.`request_master` (`rm_id`)
+,
+  CONSTRAINT `s_id`
+    FOREIGN KEY (`s_id`)
+    REFERENCES `dhs`.`service_details` (`s_id`)
+ );

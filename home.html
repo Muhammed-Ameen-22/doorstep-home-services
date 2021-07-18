@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <title> New Home | DHS </title>
+    <link rel="stylesheet" href="stylesheets/home.css">
+    <!-- <link href="stylesheets/bootstrap.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+<style>
+  .swiper-container {
+    width: 100%;
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+  
+  .swiper-slide {
+    background-position: center;
+    background-size: cover;
+    width: 200px;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    
+  }
+  
+  .swiper-slide img {
+    position: absolute;  
+   bottom: 0;
+    display: block;
+    width: 100%;
+  }
+  .swiper-container-3d .swiper-slide-shadow-left,
+  .swiper-container-3d .swiper-slide-shadow-right
+{
+    background-image:none;
+}
+
+</style>
+</head>
+<body>
+  <section>
+    <div class="circle"></div>
+    <header>
+        <a href="#"><img src="" class="logo" alt=""></a>
+        <ul class="navigation">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Login</a></li>
+            <li><a href="#">About us</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </header> 
+    <div class="content">
+    <div class="textBox">
+      <h2>We serve the world</h2>
+      <p>We Serve the customers with atmost effort and the service providers are everedy to do any work they are easy with
+        The work they put forward will be perfect no matter what it is super</p>
+      <a href="#">Login</a>  
+    </div>  
+  <div class="imgBox">
+<div class="swiper-container mySwiper">
+<div class="swiper-wrapper">
+  <div class="swiper-slide">
+    <img src="images/carpenter.png" />
+  </div>
+  <div class="swiper-slide">
+    <img src="images/cleaner.png" />
+  </div>
+  <div class="swiper-slide">
+    <img src="images/mechanic.png" />
+  </div>
+  <div class="swiper-slide">
+    <img src="images/painter.png" />
+  </div>
+  <div class="swiper-slide">
+    <img src="images/plumber.png" />
+  </div>
+
+<div class="swiper-pagination"></div>
+</div>
+</div>
+</div>
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+<script>
+var swiper = new Swiper(".mySwiper", {
+  effect: "coverflow",
+  grabCursor: true,
+  centeredSlides: true,
+  slidesPerView: "auto",
+  coverflowEffect: {
+    rotate: 50,
+    stretch: 0,
+    depth: 100,
+    modifier: 1,
+    slideShadows: true,
+  },
+  pagination: {
+    el: ".swiper-pagination",
+  },
+  loop:true,
+});
+</script>
+</script>
+</body>
+</html>

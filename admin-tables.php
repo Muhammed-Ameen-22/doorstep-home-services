@@ -3,6 +3,7 @@
 <title></title>
 <link rel="stylesheet" href="stylesheets/admin-tables.css">
 <link href="stylesheets/bootstrap.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" >
 </head>    
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
@@ -19,7 +20,7 @@
             </li>
            
             <li class="nav-item">
-                <a class="nav-link" href="#"> Logout</a>
+                <a class="nav-link" href="index.php"> Logout</a>
             </li>
         </ul>
     </div>
@@ -44,8 +45,9 @@ if($table_to_be_selected == 'sp'){
          <div class="col col-2">Service Type</div>
          <div class="col col-2">Name</div>
          <div class="col col-3">Address</div>
-         <div class="col col-4">Email</div>
+         <div class="col col-3">Email</div>
          <div class="col col-2">Phone</div>
+         <div class="col col-1"></div>
          
        </li>';
 
@@ -57,8 +59,9 @@ if($table_to_be_selected == 'sp'){
         <div class="col col-2" data-label="Name">'. $row['sp_fname'].' '.$row['sp_lname'].'</div>
         <div class="col col-3" data-label="Address">'.$row['sp_house'].', '.$row['sp_city'].', 
         '.$row['sp_district'].', '.$row['sp_pincode'].'</div>
-        <div class="col col-4" data-label="Email">'. $row['sp_username'].'</div>
+        <div class="col col-3" data-label="Email">'. $row['sp_username'].'</div>
         <div class="col col-2" data-label="Phone">'. $row['sp_phone'].'</div>
+        <div class="col col-1" data-label=""><button class="btn" onclick="confirmDeletion('.$row['sp_id'].')"> <i class="fas fa-trash-alt"></i></button></div>
       </li>';
   
         }
@@ -111,4 +114,13 @@ $conn->close();
 ?>
 </table>
 </body>
+<script> 
+
+function confirmDeletion(id){
+  if(confirm('Do you want to delete this entry?')){
+    window.location.href= "delete.php?spid="+id;  
+  }
+
+}
+</script>
 </html>
