@@ -2,16 +2,52 @@
 require_once "db-connection.php";
 session_start();
 $sp_id = $_SESSION['s_id'];
-$sql= "select rc.rc_id, c.cust_fname, c.cust_house,c.cust_city,rm.r_date from request_child as rc inner join request_master as rm on rc.rm_id = rm.rm_id 
+$select_my_works= "select rc.rc_id, c.cust_fname, c.cust_house,c.cust_city,rm.r_date from request_child as rc 
+inner join request_master as rm on rc.rm_id = rm.rm_id 
 inner join cust_details as c on rm.cust_id = c.cust_id where rc.s_id = ".$sp_id." and rc.r_status = 'Accepted'";
-if(mysqli_query($conn, $sql )){
-  // $result = mysqli_query($conn,$sql);`
-  // $my_request = mysqli_fetch_array($result);
-  $result = $conn -> query($sql);
+if(mysqli_query($conn, $select_my_works )){
+ 
+  $result = $conn -> query($select_my_works);
 } else{
-  echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
+  echo "ERROR: Could not able to execute $select_my_works. " . mysqli_error($conn);
 }
-//echo "This is the req".$my_request['rc_id'];   
+
+
+if($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['COMPLETE'])){
+  $rc_id = $_POST['rc_id'];
+  $total_amount = $_POST['amount'];
+
+  $get_acceptance_id = "select a_id from accept where rc_id =".$rc_id;
+  if(mysqli_query($conn, $get_acceptance_id )){
+    $res = $conn -> query($get_acceptance_id);
+    $rows = $res->fetch_assoc();
+    $acceptance_id = $rows['a_id'];
+
+  } else{
+    echo "ERROR: Could not able to execute $get_acceptance_id. " . mysqli_error($conn);
+  }
+
+  $insert_amount = "insert into payment values(NULL,NULL,'$acceptance_id','$total_amount','Not-Paid',NULL)";
+  $request_complete = "update request_child set r_status = 'Completed' where rc_id =".$rc_id;
+  if(mysqli_query($conn, $insert_amount )){
+    mysqli_query($conn, $request_complete);
+    header("location:sp_myworks");
+  } else{
+    echo "ERROR: Could not able to execute $insert_amount. " . mysqli_error($conn);
+  }
+}
+$select_completed_works= "select rc.rc_id, c.cust_fname, c.cust_house,c.cust_city,rm.r_date,
+pay.total_amount,a.a_id from request_child as rc 
+inner join request_master as rm on rc.rm_id = rm.rm_id 
+inner join accept as a on rc.rc_id=a.rc_id
+inner join payment as pay on a.a_id=pay.a_id
+inner join cust_details as c on rm.cust_id = c.cust_id where rc.s_id = ".$sp_id." and rc.r_status = 'Completed'";
+if(mysqli_query($conn, $select_completed_works )){
+ 
+  $completed = $conn -> query($select_completed_works);
+} else{
+  echo "ERROR: Could not able to execute $select_completed_works. " . mysqli_error($conn);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -58,6 +94,7 @@ if(mysqli_query($conn, $sql )){
         </div>
     </nav>
 <br>
+<h2><center>PENDING WORKS</center> </h2>
 <div class="req-table mt-100"> 
       <table class="table table-hover table-dark">
         <thead>
@@ -75,19 +112,49 @@ if(mysqli_query($conn, $sql )){
           
             <?php 
               while($row = $result->fetch_assoc()) {
-                echo '<tr><td>'.$row["rc_id"].'</td>  <td>'.$row["cust_fname"].'</td> <td>'.$row["cust_house"].'</td> 
-                <td>'.$row["r_date"].'</td> <td><input type="text" placeholder="Amount"  id="amount"></td> 
-                <td> <button class="btn btn-primary" id="compButton" type="submit" onClick="amtFix()">Completed</button></td></tr>' ;
+                echo '<form action="" method="POST"> <tr><td>'.$row["rc_id"].'</td>  <td>'.$row["cust_fname"].'</td> <td>'.$row["cust_house"].'</td> 
+                <td>'.$row["r_date"].'</td> <td><input type="text" placeholder="Amount" name="amount"  id="'.$row["rc_id"].'">
+                <input type="hidden" name="rc_id"  value="'.$row["rc_id"].'"></td> 
+                <td> <button class="btn btn-primary" id="compButton" type="submit" name="COMPLETE" onClick="">Completed</button></td></tr> </form>' ;
+              }
+              ?>  
+        </tbody>
+      </table>
+      </div>
+
+      <h2><center>COMPLETED WORKS</center> </h2>
+<div class="req-table mt-100"> 
+      <table class="table table-hover table-dark">
+        <thead>
+          <tr>
+            <th class="col-1" scope="col">Work ID</th>
+            <th  class="col-2" scope="col">Customer Name</th>
+            <th class ="col-2" scope="col">Address</th>
+            <th class ="col-2" scope="col">Work date</th>
+            <th class="col-1">Amount</th>
+            
+        
+          </tr>
+        </thead>
+        <tbody>
+          
+            <?php 
+              while($row = $completed->fetch_assoc()) {
+                echo ' <tr><td>'.$row["rc_id"].'</td>  <td>'.$row["cust_fname"].'</td> <td>'.$row["cust_house"].'</td> 
+                <td>'.$row["r_date"].'</td> <td>'.$row["total_amount"].'</td> </tr>' ;
               }
               ?>  
         </tbody>
       </table>
       </div>
       <script>
-    function amtFix() 
+    function setAmount(id) 
     {
-      document.getElementById("amount").readOnly = true;
-      document. getElementById("compButton"). disabled = true;
+      console.log("this is the id ",id);
+      window.location.href= "sp-myworks.php?"+"rc_id="+id+"&";
+      console.log(document.getElementById(id).value);
+      document.getElementById(id).disabled = true;
+      document. getElementById(id). disabled = true;
     }
     </script>
     </body>

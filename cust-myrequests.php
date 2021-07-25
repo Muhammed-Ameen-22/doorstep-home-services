@@ -55,8 +55,11 @@ if(mysqli_query($conn, $sql )){
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active">
+                    <li class="nav-item ">
                         <a class="nav-link"> <?php echo "Hi, ".$currentUser; ?> </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active"> My Requests</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link"  href="cust-dashboard.php"> Dashboard</a>
@@ -77,7 +80,8 @@ if(mysqli_query($conn, $sql )){
             <th  class="col-2" scope="col">Service</th>
             <th class ="col-3" scope="col">Requested date</th>
             <th class="col-3" scope="col">Accepted by</th>
-            <th class="col-1" scope="col">Status</th>
+            <th class="col-1" scope="col">Req Status</th>
+            <th class="col-1" scope="col">Payment Status</th>
           </tr>
         </thead>
         <tbody>

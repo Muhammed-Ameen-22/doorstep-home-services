@@ -98,8 +98,11 @@ else if(isset($_POST['service']) && isset($_POST['pincode'])){
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active">
+                    <li class="nav-item">
                         <a class="nav-link" > <?php echo "Hi, ".$currentUser; ?></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active"> Dashboard</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="cust-myrequests.php"> My Requests</a>

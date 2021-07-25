@@ -37,6 +37,21 @@ CREATE TABLE `dhs`.`sp_details` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
+CREATE TABLE `dhs`.`card` (
+  `card_id` INT NOT NULL AUTO_INCREMENT,
+  `cust_id` INT NOT NULL,
+  `card_no` INT NOT NULL,
+  `exp_date` DATE NOT NULL,
+  `cvv` INT NOT NULL,
+  PRIMARY KEY (`card_id`),
+
+  CONSTRAINT `cust_id`
+    FOREIGN KEY (`cust_id`)
+    REFERENCES `dhs`.`cust_details` (`cust_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+
 
 INSERT INTO `dhs`.`sp_details` (`sp_id`, `s_id`, `sp_username`, `sp_fname`, `sp_lname`, `sp_phone`, `sp_house`, `sp_city`, `sp_district`, `sp_pincode`, `sp_password`) VALUES ('1', '101', 'raju123@gmail.com', 'Raju', 'Raj', '9847123123', '11A/12', 'Mattancherry', 'Ernakulam', '682007', '123123');
 INSERT INTO `dhs`.`sp_details` (`sp_id`, `s_id`, `sp_username`, `sp_fname`, `sp_lname`, `sp_phone`, `sp_house`, `sp_city`, `sp_district`, `sp_pincode`, `sp_password`) VALUES ('2', '101', 'sam11@gmail.com', 'Sam', 'Thomas', '8089564578', '12B/147', 'Mattancherry', 'Ernakulam', '682007', '11111');
@@ -96,6 +111,24 @@ CREATE TABLE `dhs`.`request_child` (
     REFERENCES `dhs`.`sp_details` (`sp_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
+
+    CREATE TABLE `dhs`.`payment` (
+  `p_id` INT NOT NULL AUTO_INCREMENT,
+  `card_id` INT NULL,
+  `a_id` INT NOT NULL,
+  `total_amount` INT NOT NULL,
+  `p_status` VARCHAR(45) NOT NULL,
+  `p_date` DATE NOT NULL,
+  PRIMARY KEY (`p_id`),
+
+  CONSTRAINT `a_id`
+    FOREIGN KEY (`a_id`)
+    REFERENCES `dhs`.`accept` (`a_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+
+
 
 Styled table 
 <div class="row">
