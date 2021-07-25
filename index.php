@@ -54,7 +54,8 @@ if(isset($_POST["login"])) {
             //     exit();
             //     }
 
-                $sql =  "SELECT concat(cust_fname,' ',cust_lname) as name,cust_pass,cust_username,cust_id from cust_details where cust_username ='".$username."'";
+                $sql =  "SELECT concat(cust_fname,' ',cust_lname) as name,cust_pass,cust_username,cust_id from cust_details 
+                where cust_username ='".$username."'";
 
                 $result=mysqli_query($conn,$sql);
        
@@ -64,7 +65,7 @@ if(isset($_POST["login"])) {
                     if(password_verify($password,$row['cust_pass'])){   
                         session_start();
                         $_SESSION["name"] = $row['name'];   
-                        $_SESSION["id"] = $row['cust_id']; 
+                        $_SESSION["cust_id"] = $row['cust_id']; 
                         
                         header("location: cust-dashboard.php");
                         exit();
@@ -83,38 +84,17 @@ if(isset($_POST["login"])) {
         {
             // Validate credentials
         if(empty($username_err) && empty($password_err)){
-            // Prepare a select statement
             
-            // $sql = "SELECT * FROM sp_details where sp_username ='".$username."' AND sp_password='".$password."'";
-            // if(mysqli_query($conn, $sql)){
-            // //    echo "Records inserted successfully.";
-            // } else{
-            //     echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
-            // }
-            // $result=mysqli_query($conn,$sql);
-            // // if($result==1){
-
-            // //     while($row = mysqli_fetch_array($result))
-            // //     {
-            // //       echo "\nEmail".$row['cust_email']."\tPass: ".$row['cust_pass'];
-            // //     }
-            // //   }
-            // if(mysqli_num_rows($result)==1){   
-            //     echo"Login Successfull";       
-            //     // header("location: sp-dashboard.php");
-            //     exit();
-            // }
-            // else{
-        
-            // exit();
-            // }
-
             $sql =  "SELECT * FROM sp_details where sp_username ='".$username."'";
                 $result=mysqli_query($conn,$sql);
                 if(mysqli_num_rows($result)>0){  
                     $row = mysqli_fetch_array($result);
                     if(password_verify($password,$row['sp_password'])){        
-                        header("location: sp-dashboard.html");
+                        session_start();
+                          
+                        $_SESSION["sp_id"] = $row['sp_id'];
+                        $_SESSION["s_id"] = $row['s_id']; 
+                        header("location: sp-dashboard.php");
                         exit();
                     }
                     else{
@@ -244,7 +224,7 @@ if(isset($_POST["login"])) {
                     </label>
                   </div><br>
             </div>
-            
+
             <div class="field email">
             <div class="input-area">
               <input type="text" placeholder="Email Address" class="email" name="username">

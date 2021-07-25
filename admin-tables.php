@@ -1,6 +1,6 @@
 <html>
 <head>
-<title></title>
+<title>DHS | Details</title>
 <link rel="stylesheet" href="stylesheets/admin-tables.css">
 <link href="stylesheets/bootstrap.css" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" >
@@ -33,7 +33,7 @@ require_once "db-connection.php";
 $table_to_be_selected = $_GET["id"];
 
 if($table_to_be_selected == 'sp'){
-    $sql = "SELECT * FROM sp_details inner join service_details on sp_details.s_id = service_details.s_id";
+    $sql = "SELECT * FROM sp_details inner join service_details on sp_details.s_id = service_details.s_id where sp_details.sp_status='Active'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0)
     {
@@ -61,7 +61,8 @@ if($table_to_be_selected == 'sp'){
         '.$row['sp_district'].', '.$row['sp_pincode'].'</div>
         <div class="col col-3" data-label="Email">'. $row['sp_username'].'</div>
         <div class="col col-2" data-label="Phone">'. $row['sp_phone'].'</div>
-        <div class="col col-1" data-label=""><button class="btn" onclick="confirmDeletion('.$row['sp_id'].')"> <i class="fas fa-trash-alt"></i></button></div>
+        <div class="col col-1" data-label="">
+        <button class="btn" onclick="confirmDeletion('.$row['sp_id'].',\'sp\')"> <i class="fas fa-trash-alt"></i></button></div>
       </li>';
   
         }
@@ -87,6 +88,7 @@ else if($table_to_be_selected == 'cust'){
             <div class="col col-3">Address</div>
             <div class="col col-4">Email</div>
             <div class="col col-2">Phone</div>
+            <div class="col col-1"></div>
             
           </li>';
        
@@ -99,6 +101,8 @@ else if($table_to_be_selected == 'cust'){
             '.$row['cust_dist'].', '.$row['cust_pincode'].'</div>
             <div class="col col-4" data-label="Email">'. $row['cust_username'].'</div>
             <div class="col col-2" data-label="Phone">'. $row['cust_phno'].'</div>
+            <div class="col col-1" data-label="">
+            <button class="btn" onclick="confirmDeletion('.$row['cust_id'].',\'cust\')"> <i class="fas fa-trash-alt"></i></button></div>
           </li>';
       
             }
@@ -116,11 +120,11 @@ $conn->close();
 </body>
 <script> 
 
-function confirmDeletion(id){
+function confirmDeletion(id,user){
+  console.log(user);
   if(confirm('Do you want to delete this entry?')){
-    window.location.href= "delete.php?spid="+id;  
+    window.location.href= "delete.php?"+user+"="+id;  
   }
-
 }
 </script>
 </html>

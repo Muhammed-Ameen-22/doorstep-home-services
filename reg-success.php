@@ -30,8 +30,8 @@ if(isset($_POST["submit"])) {
         $service = $_POST["service"];
         // echo "$service".$service;
       
-        $sql = "INSERT INTO sp_details(s_id,sp_fname,sp_lname,sp_house,sp_city,sp_district,sp_pincode,sp_username,sp_password,sp_phone) 
-        VALUES('$service','$fname','$lname','$house', '$city', '$district','$pincode', '$email', '$password', '$phno')";
+        $sql = "INSERT INTO sp_details(s_id,sp_fname,sp_lname,sp_house,sp_city,sp_district,sp_pincode,sp_username,sp_password,sp_phone,sp_status) 
+        VALUES('$service','$fname','$lname','$house', '$city', '$district','$pincode', '$email', '$password', '$phno','Active')";
         if(mysqli_query($conn, $sql)){
         //    echo "Records inserted successfully.";
         } 

@@ -1,3 +1,39 @@
+<?php
+require_once "db-connection.php";
+session_start();
+$s_id = $_SESSION['s_id'];
+$sp_id=$_SESSION['sp_id'];
+$sql= "select rc.rc_id, c.cust_fname, rm.r_date from request_child as rc inner join request_master as rm on rc.rm_id = rm.rm_id 
+inner join cust_details as c on rm.cust_id = c.cust_id where rc.s_id = ".$s_id." and r_status = 'Requested'" ;
+
+if(mysqli_query($conn, $sql )){
+  // $result = mysqli_query($conn,$sql);
+  // $my_request = mysqli_fetch_array($result);
+  $result = $conn -> query($sql);
+} else{
+  echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
+}
+
+if($_SERVER['REQUEST_METHOD'] == "GET" and isset($_GET['ACCEPT'])){
+  $rc_id=$_GET['req_id'];
+  $update_req_status = "update request_child set r_status ='Accepted' where rc_id = ".$_GET['req_id'];
+  if(mysqli_query($conn, $update_req_status )){
+    //updated request_child status to Accepted
+    echo "This is sid".$sp_id;
+     $insert_into_accept ="insert into accept values(NULL,'$rc_id','$sp_id','Accepted')";
+        if(mysqli_query($conn, $insert_into_accept)){
+            //Inserted into accept table
+        } else{
+          echo "ERROR: Could not able to execute $insert_into_accept " . mysqli_error($conn);
+        }
+     //header("location: sp-dashboard");
+  } else{
+    echo "ERROR: Could not able to execute $update_req_status. " . mysqli_error($conn);
+  }
+}
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,10 +66,10 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="index.php"> Home</a>
+                        <a class="nav-link" href="sp-dashboard.php"> Dashboard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link"  href="#"> My works</a>
+                        <a class="nav-link"  href="sp-myworks.php"> My works</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="logout.php"> Log out </a>
@@ -50,17 +86,24 @@
             <th class="col-1" scope="col">Request ID</th>
             <th  class="col-2" scope="col">Customer Name</th>
             <th class ="col-3" scope="col">Requested date</th>
+            <th class="col-1"></th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">1</th>
+          
+            <?php 
+              while($row = $result->fetch_assoc()) {
+                echo '<form action=""><tr><td><input type="hidden" value="'.$row["rc_id"].'" name="req_id">'.$row["rc_id"].'</td>  <td>'.$row["cust_fname"].'</td> <td>'.$row["r_date"].'</td> 
+                 <td>  <input type="submit" value="Accept" name="ACCEPT"  )"> </form></td></tr>';
+              }
+              ?>  
+           <!-- <th scope="row">1</th>
             <td>Shyam</td>
-            <td>12-07-2021</td>
-            <!-- <td><input type="button" value="Accept"></td> -->
+            <td>12-07-2021</td>-->
+            <!-- <td><input type="button" value="Accept"></td>  -->
         
-          </tr>
-          <tr>
+          
+          <!-- <tr>
             <th scope="row">2</th>
             <td>Jake</td>
             <td>15-07-2021</td>
@@ -71,9 +114,13 @@
             <td >Harry</td>
             <td>19-07-2021</td>
         
-          </tr>
+          </tr> -->
         </tbody>
       </table>
       </div>
     </body>
+    <script> 
+
+
+</script>
     </html>

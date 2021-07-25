@@ -9,7 +9,7 @@ if(isset($_POST['book'])){
     $service=$_POST['service'];
     $pincode=$_POST['pincode'];
     $quantity=$_POST['quantity'];
-   $cust_id = $_SESSION['id'];
+   $cust_id = $_SESSION['cust_id'];
    $req_date =$_POST['req-date'];
     
     $sql_insert_request_table = "insert into request_master values(NULL,'$cust_id','$req_date','$quantity')";
@@ -25,7 +25,8 @@ if(isset($_POST['book'])){
     $sql_insert_request_child = "insert into request_child values(NULL,$id,'$service','Requested',$pincode)";
     echo $sql_insert_request_child;
     if(mysqli_query($conn, $sql_insert_request_child)){
-        header("location: cust-myrequests.html");
+        header("location: cust-myrequests.php");
+        
     } else{
         echo "ERROR: Could not able to execute $sql_insert_request_table. " . mysqli_error($conn);
     }
@@ -98,10 +99,10 @@ else if(isset($_POST['service']) && isset($_POST['pincode'])){
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="index.php"> <?php echo "Hi, ".$currentUser; ?></a>
+                        <a class="nav-link" > <?php echo "Hi, ".$currentUser; ?></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"> My Requests</a>
+                        <a class="nav-link" href="cust-myrequests.php"> My Requests</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="logout.php"> Logout</a>
