@@ -133,13 +133,26 @@ if(isset($_POST["login"])) {
     <script src="javascript/bootstrap.bundle.min.js" type="text/javascript"></script>
     <script src="javascript/bootstrap.bundle.js" type="text/javascript"></script>
    
+    <!-- <style>
+        body
+        {
+            background:red;
+        }
+    
+.navbar-default {
+    background: none;
+  	border: none;
+}
+    </style> -->
+
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+    <!-- <div class="header"> -->
+    <nav class="navbar my-nav navbar-expand-lg navbar-light  fixed-top ">
 
         <div class="container-fluid">
-            <a class="navbar-brand" href="#"> <img class="logo-img" src="images/logo.png"> </a>
+            <a class="navbar-brand" href="#"> <img class="logo-img" src="images/logo.png"> </a> 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -160,9 +173,23 @@ if(isset($_POST["login"])) {
                 </ul>
             </div>
         </div>
+        
     </nav>
-
-    <div id="carouselExampleIndicators" class="carousel slide"  data-ride="carousel">
+   
+    <!-- <div class="bg-image">
+        <img src="images/bg.jpg"  alt="">
+        <div class="bg-image-caption">
+            Services are at your doorstep 
+            <div class="col-md-4">
+				<div class="form-btn" data-toggle="modal" data-target="#modalLoginForm">
+                	<button class="submit-btn">Login</button>
+				</div>
+			</div>
+        </div>
+    </div> -->
+    
+    <div class=circle>
+    <div id="carouselExampleIndicators" class="my-carousel carousel slide"  data-ride="carousel">
         <ol class="carousel-indicators">
             <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
             <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
@@ -172,21 +199,38 @@ if(isset($_POST["login"])) {
             <div class="carousel-item active" data-interval="2000">
                 <img class="d-block w-100" src="images/background1.jpg" alt="First slide">
                 <div class="carousel-caption">
-                    <a href="" class="button-login btn btn-primary" data-toggle="modal" data-target="#modalLoginForm" >Login</a>
+                    <!-- <h2 class="carousel-head">SERVICE AT YOUR DOORSTEP</h2> -->
+                    <!-- <a href="" class="button-login btn btn-primary" data-toggle="modal" data-target="#modalLoginForm" >
+                        Login</a> -->
+                    <div class="col-md-4">
+									<div class="form-btn" data-toggle="modal" data-target="#modalLoginForm">
+										<button class="submit-btn">Login</button>
+									</div>
+					</div>
                 </div>
             </div>
             <div class="carousel-item" data-interval="2000">
                 <img class="d-block w-100" src="images/background4.png" alt="Second slide">
                 <div class="carousel-caption">
-                    <a href="" class="button-login btn btn-primary" data-toggle="modal" data-target="#modalLoginForm" >Login</a>
+                    <!-- <a href="" class="button-login btn btn-primary" data-toggle="modal" data-target="#modalLoginForm" >Login</a> -->
+                    <div class="col-md-4">
+									<div class="form-btn" data-toggle="modal" data-target="#modalLoginForm">
+										<button class="submit-btn">Login</button>
+									</div>
+					</div>
                 </div>
             </div>
             <div class="carousel-item" data-interval="2000">
                 <img class="d-block w-100" src="images/background2.png" alt="Third slide">
                 <div class="carousel-caption">
-                    <a href="" class="button-login btn btn-primary" data-toggle="modal" data-target="#modalLoginForm" >Login</a>
+                    <!-- <a href="" class="button-login btn btn-primary" data-toggle="modal" data-target="#modalLoginForm" >Login</a> -->
+                    <div class="col-md-4">
+									<div class="form-btn" data-toggle="modal" data-target="#modalLoginForm">
+										<button class="submit-btn">Login</button>
+									</div>
+					</div>
                 </div>
-            </div>
+            </div> 
         </div>
         <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -197,7 +241,7 @@ if(isset($_POST["login"])) {
             <span class="sr-only">Next</span>
         </a>
     </div>
-
+    </div>
     
     <div class="login-modal modal wrapper " tabindex="-1" id="modalLoginForm" >
         <button type="button" class="close" data-dismiss="modal">
@@ -246,6 +290,8 @@ if(isset($_POST["login"])) {
         </form>
         <div class="sign-txt">Not yet member? <a href="registration.html">Signup now</a></div>
       </div>
+
+      <!-- </div> -->
 
 
 

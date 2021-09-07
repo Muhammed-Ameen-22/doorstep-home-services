@@ -31,7 +31,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['COMPLETE'])){
   $request_complete = "update request_child set r_status = 'Completed' where rc_id =".$rc_id;
   if(mysqli_query($conn, $insert_amount )){
     mysqli_query($conn, $request_complete);
-    header("location:sp_myworks");
+    header("location:sp-myworks");
   } else{
     echo "ERROR: Could not able to execute $insert_amount. " . mysqli_error($conn);
   }

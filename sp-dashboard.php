@@ -19,14 +19,14 @@ if($_SERVER['REQUEST_METHOD'] == "GET" and isset($_GET['ACCEPT'])){
   $update_req_status = "update request_child set r_status ='Accepted' where rc_id = ".$_GET['req_id'];
   if(mysqli_query($conn, $update_req_status )){
     //updated request_child status to Accepted
-    echo "This is sid".$sp_id;
+  
      $insert_into_accept ="insert into accept values(NULL,'$rc_id','$sp_id','Accepted')";
         if(mysqli_query($conn, $insert_into_accept)){
             //Inserted into accept table
         } else{
           echo "ERROR: Could not able to execute $insert_into_accept " . mysqli_error($conn);
         }
-     //header("location: sp-dashboard");
+     header("location: sp-dashboard");
   } else{
     echo "ERROR: Could not able to execute $update_req_status. " . mysqli_error($conn);
   }

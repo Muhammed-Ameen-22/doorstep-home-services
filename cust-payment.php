@@ -1,3 +1,18 @@
+<?php
+require_once "db-connection.php";
+session_start();
+$currentUser = $_SESSION["name"];
+$cust_id = $_SESSION['cust_id'];
+$sql= "select p.total_amount, p.a_id, a.rc_id, a.sp_id, rc.rm_id , rm.cust_id
+from payment as p
+inner join accept as a on a.a_id=p.a_id
+inner join request_child as rc on rc.rc_id=a.rc_id
+inner join request_master as rm on rm.rm_id=rc.rm_id
+where rm.cust_id = ".$cust_id." and p.p_status !='Paid'";
+
+$total_amount = isset($_POST['total_amount']) ? $_POST['total_amount'] : "";
+echo $total_amount;
+?>
 <div class="px-4 px-lg-0">
     <!DOCTYPE html>
     <html lang="en">

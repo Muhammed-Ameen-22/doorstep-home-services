@@ -5,7 +5,6 @@ $pincode="";
 session_start();
 $currentUser = $_SESSION["name"];
 if(isset($_POST['book'])){
-    echo "hello";
     $service=$_POST['service'];
     $pincode=$_POST['pincode'];
     $quantity=$_POST['quantity'];
@@ -14,7 +13,7 @@ if(isset($_POST['book'])){
     
     $sql_insert_request_table = "insert into request_master values(NULL,'$cust_id','$req_date','$quantity')";
     if(mysqli_query($conn, $sql_insert_request_table)){
-            
+            echo '<script>alert("Request  successfully placed!");</script>';
         } else{
             echo "ERROR: Could not able to execute $sql_insert_request_table. " . mysqli_error($conn);
         }
@@ -23,10 +22,10 @@ if(isset($_POST['book'])){
     $last_inserted_id = mysqli_fetch_array($res);
     $id = $last_inserted_id['id'];
     $sql_insert_request_child = "insert into request_child values(NULL,$id,'$service','Requested',$pincode)";
-    echo $sql_insert_request_child;
+    //echo $sql_insert_request_child;
     if(mysqli_query($conn, $sql_insert_request_child)){
-        header("location: cust-myrequests.php");
-        
+      //  header("location: cust-myrequests.php");
+
     } else{
         echo "ERROR: Could not able to execute $sql_insert_request_table. " . mysqli_error($conn);
     }
@@ -48,11 +47,10 @@ else if(isset($_POST['service']) && isset($_POST['pincode'])){
 
     $service_providers_available = "There are ".$count[0]." ".$service_name[0]."(s) available in your area";
 
-
     // while($row = mysqli_fetch_array($result))
     //         {
 
-    //          echo "valu";
+    //          echo "value";
     //           echo "\ncount is :".$row['count'];
     //           $service_providers_available = "There are ".$row['count']." no of service providers currently available";
     //           echo $service_providers_available;
@@ -155,7 +153,7 @@ else if(isset($_POST['service']) && isset($_POST['pincode'])){
 								<div class="col-md-4">
 									<div class="form-group">
 										<span class="form-label">Quantity</span>
-										<input class="form-control" type="text" placeholder="Quantity" name="quantity" >
+										<input class="form-control" min="1" max="1" type="number" placeholder="Quantity" name="quantity" >
 									</div>
 									</div>
                                     <div class="col-md-4">

@@ -2,7 +2,13 @@
 require_once "db-connection.php";
 session_start();
 $currentUser = $_SESSION["name"];
-$cust_id = $_SESSION['id'];
+$cust_id = $_SESSION['cust_id'];
+
+if(isset($_POST['pay'])){
+  $total_amount=$_POST['total_amount'];
+  $service=$_POST['service'];
+  $cust_id = $_SESSION['cust_id'];
+}
 // $sql= "select rc.rc_id, s.s_name, rm.r_date, rc.r_status from request_child as rc inner join request_master as rm on rc.rm_id = rm.rm_id 
 //         inner join service_details as s on rc.s_id = s.s_id where rm.cust_id = ".$cust_id ;
 
@@ -12,8 +18,8 @@ inner join request_master as rm on rm.rm_id = rc.rm_id
 inner join service_details as sr on sr.s_id = rc.s_id
 inner join accept as a on a.rc_id =rc.rc_id
 inner join sp_details as sp on sp.sp_id = a.sp_id 
-where rm.cust_id = ".$cust_id ;
-
+where rm.cust_id = ".$cust_id." and rc.r_status !='Completed'";
+//echo $sql;
 // $fetch_sp_name="select sp.sp_fname, sp.sp_lname from sp_details as sp inner join accept as a on a.sp_id=sp.sp_id "
 if(mysqli_query($conn, $sql )){
   // $result = mysqli_query($conn,$sql);
@@ -22,7 +28,25 @@ if(mysqli_query($conn, $sql )){
 } else{
   echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
 }
-//echo "This is the req".$my_request['rc_id'];   
+
+$select_paid= "select rc.rc_id, rc.r_status, rm.r_date, sr.s_name, concat(sp.sp_fname,' ',sp.sp_lname) as sp_name, 
+sp.sp_phone, p.total_amount,p.p_status
+from request_child as rc 
+inner join request_master as rm on rm.rm_id = rc.rm_id
+inner join service_details as sr on sr.s_id = rc.s_id
+inner join accept as a on a.rc_id =rc.rc_id
+inner join payment as p on a.a_id=p.a_id
+inner join sp_details as sp on sp.sp_id = a.sp_id 
+where rm.cust_id = ".$cust_id ;
+
+// $fetch_sp_name="select sp.sp_fname, sp.sp_lname from sp_details as sp inner join accept as a on a.sp_id=sp.sp_id "
+if(mysqli_query($conn, $select_paid )){
+  // $result = mysqli_query($conn,$sql);
+  // $my_request = mysqli_fetch_array($result);
+  $paid = $conn -> query($select_paid);
+} else{
+  echo "ERROR: Could not able to execute $select_paid. " . mysqli_error($conn);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,7 +58,7 @@ if(mysqli_query($conn, $sql )){
     <link href="stylesheets/style.css" rel="stylesheet">
     <link href="stylesheets/animate.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" >
-    <link href="stylesheets/sp-dashboard.css" rel="stylesheet">
+    <link href="stylesheets/cust-myrequests.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Montserrat:300,400,500,700"
         rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -59,10 +83,10 @@ if(mysqli_query($conn, $sql )){
                         <a class="nav-link"> <?php echo "Hi, ".$currentUser; ?> </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active"> My Requests</a>
+                        <a class="nav-link"  href="cust-dashboard.php"> Dashboard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link"  href="cust-dashboard.php"> Dashboard</a>
+                        <a class="nav-link active"> My Requests</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="logout.php"> Log out </a>
@@ -72,6 +96,8 @@ if(mysqli_query($conn, $sql )){
         </div>
     </nav>
 <br>
+
+<h2><center>PENDING REQUESTS</center></h2>
 <div class="req-table mt-100">
       <table class="table table-hover table-dark">
         <thead>
@@ -80,8 +106,9 @@ if(mysqli_query($conn, $sql )){
             <th  class="col-2" scope="col">Service</th>
             <th class ="col-3" scope="col">Requested date</th>
             <th class="col-3" scope="col">Accepted by</th>
-            <th class="col-1" scope="col">Req Status</th>
-            <th class="col-1" scope="col">Payment Status</th>
+            <th class="col-1" scope="col">Phone number</th>
+            <th class="col-1" scope="col"></th>
+            
           </tr>
         </thead>
         <tbody>
@@ -90,11 +117,45 @@ if(mysqli_query($conn, $sql )){
               while($row = $result->fetch_assoc()) {
                 echo '<tr><td>'.$row["rc_id"].'</td>  <td>'.$row["s_name"].'</td> <td>'.$row["r_date"].'</td> 
                  <td>'.$row["sp_name"].'</td>
-                 <td>'.$row["r_status"].'</td></tr>';
+                 <td>'.$row["sp_phone"].'</td></tr>';
               }
               ?>  
          </tbody>
        </table>
        </div>
+
+       <h2><center>COMPLETED REQUESTS</center></h2>
+       <div class="req-table mt-100">
+        <form action="cust-payment.php" method="POST">
+          <table class="table table-hover table-dark">
+            <thead>
+          <tr>
+                <th class="col-1" scope="col">Request ID</th>
+                <th  class="col-2" scope="col">Service</th>
+                <th class ="col-3" scope="col">Requested date</th>
+                <th class="col-3" scope="col">Worker</th>
+                <th class="col-1" scope="col">Work Status</th>
+                <th class="col-1" scope="col">Amount</th>
+                <th class="col-1" scope="col">Payment Status</th>
+                <th class="col-1" scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <?php 
+                  while($row = $paid->fetch_assoc()) {
+                    echo '<tr><td>'.$row["rc_id"].'</td>  <td>'.$row["s_name"].'</td> <td>'.$row["r_date"].'</td> 
+                    <td>'.$row["sp_name"].'</td>
+                    <td>'.$row["r_status"].'</td>
+                    <td name="total_amount">'.$row["total_amount"].'</td>
+                    <td>'.$row["p_status"].'</td>';
+                    echo "<td><button name =pay onclick=\"location.href='cust-payment.php'\">Pay Now</button></td></tr>";
+                    }
+                  ?>  
+            </tbody>
+
+          </table>
+       </form>
+      </div>
      </body>
      </html>
