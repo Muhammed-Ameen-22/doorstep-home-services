@@ -85,25 +85,27 @@ if(isset($_POST["login"])) {
             // Validate credentials
         if(empty($username_err) && empty($password_err)){
             
-            $sql =  "SELECT * FROM sp_details where sp_username ='".$username."'";
+            $sql =  "SELECT * FROM sp_details where sp_username ='".$username."' and sp_status!='Inactive'";
                 $result=mysqli_query($conn,$sql);
                 if(mysqli_num_rows($result)>0){  
                     $row = mysqli_fetch_array($result);
                     if(password_verify($password,$row['sp_password'])){        
                         session_start();
-                          
+                        $_SESSION["name"] = $row['sp_fname']." ".$row['sp_lname'] ; 
+                        //echo $_SESSION["name"];
                         $_SESSION["sp_id"] = $row['sp_id'];
                         $_SESSION["s_id"] = $row['s_id']; 
                         header("location: sp-dashboard.php");
                         exit();
                     }
                     else{
-                        echo '<script>alert("Wrong Username / Password");</script>';
+                        echo '<script>alert("Wrong Username / Password");location.href = "index.php";</script>';
                     }
                 }
                 else{
-                    echo '<script>alert("Wrong Username");</script>';
-                    exit();
+                    echo '<script>alert("Please try again with a valid account"); location.href = "index.php";</script>';
+                    
+                    //exit();
                 }
         } 
         }
@@ -254,7 +256,7 @@ if(isset($_POST["login"])) {
             </p>
             <div class="sign-txt" style="text-align: left;">
                 <div class="form-check ">
-                    <input class="radio-cus form-check-input" type="radio" name="user"  value="cust" id="flexRadioDefault1">
+                    <input class="radio-cus form-check-input" type="radio" name="user"  value="cust" id="flexRadioDefault1" required>
                     <label class="form-check-label" for="flexRadioDefault1">
                       Customer
                     </label>
@@ -262,7 +264,7 @@ if(isset($_POST["login"])) {
             </div>
             <div class="sign-txt">
                 <div class="form-check " style="text-align: left    ">
-                    <input class="radio-sp form-check-input" type="radio" name="user" value="sp" id="flexRadioDefault2" >
+                    <input class="radio-sp form-check-input" type="radio" name="user" value="sp" id="flexRadioDefault2" required>
                     <label class="form-check-label" for="flexRadioDefault1">
                       Service Provider
                     </label>
@@ -288,7 +290,7 @@ if(isset($_POST["login"])) {
           <div class="pass-txt"><a href="#">Forgot password?</a></div>
           <input type="submit" value="Login" name="login">
         </form>
-        <div class="sign-txt">Not yet member? <a href="registration.html">Signup now</a></div>
+        <div class="sign-txt">Not yet member? <a href="registration.php">Signup now</a></div>
       </div>
 
       <!-- </div> -->

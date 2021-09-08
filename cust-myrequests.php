@@ -144,12 +144,14 @@ if(mysqli_query($conn, $select_paid )){
               
                 <?php 
                   while($row = $paid->fetch_assoc()) {
-                    echo '<tr><td>'.$row["rc_id"].'</td>  <td>'.$row["s_name"].'</td> <td>'.$row["r_date"].'</td> 
+                    echo '<form action="cust-payment.php" method= "POST"><tr><td>'.$row["rc_id"].'</td>  <td>'.$row["s_name"].'</td> <td>'.$row["r_date"].'</td> 
                     <td>'.$row["sp_name"].'</td>
                     <td>'.$row["r_status"].'</td>
-                    <td name="total_amount">'.$row["total_amount"].'</td>
-                    <td>'.$row["p_status"].'</td>';
-                    echo "<td><button name =pay onclick=\"location.href='cust-payment.php'\">Pay Now</button></td></tr>";
+                    <td name="amount">'.$row["total_amount"].'</td>
+                    <td>'.$row["p_status"].'</td> 
+                    <td> <input type="hidden" value="'.$row["total_amount"].'" name="total_amount"> </td>';
+                  
+                    echo "<td><button type='submit' name='pay'>Pay Now</button></td></tr> </form>";
                     }
                   ?>  
             </tbody>

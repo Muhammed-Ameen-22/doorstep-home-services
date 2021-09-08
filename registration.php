@@ -1,3 +1,70 @@
+<?php
+include('db-connection.php');
+
+if(isset($_POST["submit"])) {   
+    $value = $_POST["user"];
+    $fname=$_POST["fname"];
+    $lname=$_POST["lname"];
+    $house=$_POST["house"];
+    $city=$_POST["city"];
+    $district=$_POST["district"];
+    $pincode=$_POST["pincode"];
+    $email=$_POST["email"];
+    $phno=$_POST["phno"];
+    $password=password_hash($_POST["password"],PASSWORD_BCRYPT);
+
+
+    if($value=="cust")
+    {
+        $sql = "INSERT INTO cust_details(cust_fname,cust_lname,cust_house,cust_city,cust_dist,cust_pincode,
+        cust_username,cust_pass,cust_phno) 
+        VALUES('$fname','$lname','$house', '$city', '$district','$pincode', '$email', '$password', '$phno')";
+        if(mysqli_query($conn, $sql)){
+          echo '<script>if(confirm("Registration Successfull, Do you want to login?")){
+            window.location.href= "index.php";  
+          }</script>';
+        } else if(mysqli_errno($conn) == 1062){   //1062 error number for unique key violation
+            echo '<script>alert("Email already exists. Please try logging in");</script>';
+           
+        }
+        else {
+            echo "ERROR: Could not able to execute $sql. " . mysqli_errno($conn);
+        }
+    }
+    else  {
+        // echo "\n else case";
+        $service = $_POST["service"];
+        // echo "$service".$service;
+      
+        $sql = "INSERT INTO sp_details(s_id,sp_fname,sp_lname,sp_house,sp_city,sp_district,sp_pincode,sp_username,sp_password,sp_phone,sp_status) 
+        VALUES('$service','$fname','$lname','$house', '$city', '$district','$pincode', '$email', '$password', '$phno','Active')";
+        if(mysqli_query($conn, $sql)){
+          echo '<script>if(confirm("Registration Successfull, Do you want to login?")){
+            window.location.href= "index.php";  
+          }</script>';
+          
+        } 
+        else if(mysqli_errno($conn) == 1062){
+             //1062 error number for unique key violation
+          echo '<script>alert("Email already exists. Please try logging in");</script>';
+          
+        }
+        else{
+            //echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
+            echo mysqli_errno($conn); 
+          }
+    }
+}
+
+ mysqli_close($conn)
+ // Check connection
+//  if (!$conn) {
+//      die("Connection failed: ");
+//      }
+//      echo "Connected successfully";
+  
+?>
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
@@ -36,7 +103,7 @@
   <div class="container">
     <div class="title">Registration</div>
     <div class="content">
-      <form action="reg-success.php" method="POST">
+      <form action="" method="POST">
         <div class="gender-details">
           <input type="radio" value="sp" name="user" id="dot-1" onclick="visService()"checked="checked" >
           <input type="radio" value="cust" name="user" id="dot-2" onclick="hideService()">

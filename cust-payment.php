@@ -11,7 +11,7 @@ inner join request_master as rm on rm.rm_id=rc.rm_id
 where rm.cust_id = ".$cust_id." and p.p_status !='Paid'";
 
 $total_amount = isset($_POST['total_amount']) ? $_POST['total_amount'] : "";
-echo $total_amount;
+
 ?>
 <div class="px-4 px-lg-0">
     <!DOCTYPE html>
@@ -143,10 +143,12 @@ echo $total_amount;
             <div class="p-4">
               <p class="font-italic mb-4"></p>
               <ul class="list-unstyled mb-4">
-                <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Work Total </strong><strong>Rs.480.00</strong></li>
-                <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Extra charges</strong><strong>Rs.20.00</strong></li>
+                <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Work Total 
+                    </strong><strong>Rs.<?php echo "$total_amount" ?></strong></li>
+                <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Extra charges</strong>
+                    <strong>Rs.<?php echo "0" ?></strong></li>
                 <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Total</strong>
-                  <h5 class="font-weight-bold">Rs.500.00</h5>
+                  <h5 class="font-weight-bold">Rs.<?php echo "$total_amount" ?></h5>
                 </li>
               </ul><a href="#" class="btn btn-dark rounded-pill py-2 btn-block">Procceed to checkout</a>
             </div>

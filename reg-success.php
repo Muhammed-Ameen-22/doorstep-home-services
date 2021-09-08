@@ -20,9 +20,12 @@ if(isset($_POST["submit"])) {
         cust_username,cust_pass,cust_phno) 
         VALUES('$fname','$lname','$house', '$city', '$district','$pincode', '$email', '$password', '$phno')";
         if(mysqli_query($conn, $sql)){
-        //    echo "Records inserted successfully.";
-        } else{
-            echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
+        
+        } else if(mysqli_errno($conn) == 1062){   //1062 error number for unique key violation
+            echo "Email already exists. Please try logging in";
+        }
+        else {
+            echo "ERROR: Could not able to execute $sql. " . mysqli_errno($conn);
         }
     }
     else  {

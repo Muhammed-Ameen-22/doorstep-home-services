@@ -1,6 +1,7 @@
 <?php
 require_once "db-connection.php";
 session_start();
+$currentUser = $_SESSION["name"];
 $s_id = $_SESSION['s_id'];
 $sp_id=$_SESSION['sp_id'];
 $sql= "select rc.rc_id, c.cust_fname, rm.r_date from request_child as rc inner join request_master as rm on rc.rm_id = rm.rm_id 
@@ -65,6 +66,9 @@ if($_SERVER['REQUEST_METHOD'] == "GET" and isset($_GET['ACCEPT'])){
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                        <a class="nav-link" > <?php echo "Hi, ".$currentUser; ?></a>
+                    </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="sp-dashboard.php"> Dashboard</a>
                     </li>

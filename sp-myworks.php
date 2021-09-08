@@ -1,10 +1,12 @@
 <?php
 require_once "db-connection.php";
 session_start();
-$sp_id = $_SESSION['s_id'];
+$currentUser = $_SESSION["name"];
+$s_id = $_SESSION['s_id'];
+$sp_id = $_SESSION['sp_id'];
 $select_my_works= "select rc.rc_id, c.cust_fname, c.cust_house,c.cust_city,rm.r_date from request_child as rc 
 inner join request_master as rm on rc.rm_id = rm.rm_id 
-inner join cust_details as c on rm.cust_id = c.cust_id where rc.s_id = ".$sp_id." and rc.r_status = 'Accepted'";
+inner join cust_details as c on rm.cust_id = c.cust_id where rc.s_id = ".$s_id." and rc.r_status = 'Accepted'";
 if(mysqli_query($conn, $select_my_works )){
  
   $result = $conn -> query($select_my_works);
@@ -41,7 +43,7 @@ pay.total_amount,a.a_id from request_child as rc
 inner join request_master as rm on rc.rm_id = rm.rm_id 
 inner join accept as a on rc.rc_id=a.rc_id
 inner join payment as pay on a.a_id=pay.a_id
-inner join cust_details as c on rm.cust_id = c.cust_id where rc.s_id = ".$sp_id." and rc.r_status = 'Completed'";
+inner join cust_details as c on rm.cust_id = c.cust_id where rc.s_id = ".$s_id." and rc.r_status = 'Completed' and a.sp_id = ".$sp_id;
 if(mysqli_query($conn, $select_completed_works )){
  
   $completed = $conn -> query($select_completed_works);
@@ -80,6 +82,9 @@ if(mysqli_query($conn, $select_completed_works )){
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
+                <li class="nav-item ">
+                        <a class="nav-link"> <?php echo "Hi, ".$currentUser; ?> </a>
+                    </li>
                     <li class="nav-item ">
                         <a class="nav-link" href="sp-dashboard.php"> Dashboard</a>
                     </li>
@@ -111,12 +116,14 @@ if(mysqli_query($conn, $select_completed_works )){
         <tbody>
           
             <?php 
+         
               while($row = $result->fetch_assoc()) {
                 echo '<form action="" method="POST"> <tr><td>'.$row["rc_id"].'</td>  <td>'.$row["cust_fname"].'</td> <td>'.$row["cust_house"].'</td> 
                 <td>'.$row["r_date"].'</td> <td><input type="text" placeholder="Amount" name="amount"  id="'.$row["rc_id"].'">
                 <input type="hidden" name="rc_id"  value="'.$row["rc_id"].'"></td> 
                 <td> <button class="btn btn-primary" id="compButton" type="submit" name="COMPLETE" onClick="">Completed</button></td></tr> </form>' ;
               }
+            
               ?>  
         </tbody>
       </table>
