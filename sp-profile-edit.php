@@ -36,7 +36,7 @@ if ($result->num_rows > 0)
     {
       $row = $result->fetch_assoc() ;
         
-          echo '<div class="container">
+          echo '<div class="container" style="margin-top:-10%">
           <div class="title">Update Profile</div>
           <div class="content">
             <form action="" method="POST">
