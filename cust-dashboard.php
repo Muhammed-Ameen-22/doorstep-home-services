@@ -172,7 +172,7 @@ else if(isset($_POST['service']) && isset($_POST['pincode'])){
 								<div class="col-md-4">
 									<div class="form-group">
 										<span class="form-label">Quantity</span>
-										<input class="form-control" min="1" max= <?php echo $count[0]?> type="number" placeholder="Quantity" name="quantity" >
+										<input class="form-control" min="1" max='.$count[0].' type="number" placeholder="Quantity" name="quantity" >
 									</div>
 									</div>
                                     <div class="col-md-4">

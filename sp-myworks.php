@@ -9,7 +9,7 @@ $s_id = $_SESSION['s_id'];
 $sp_id = $_SESSION['sp_id'];
 $select_my_works= "select rc.rc_id, c.cust_fname, c.cust_house,c.cust_city,rm.r_date from request_child as rc 
 inner join request_master as rm on rc.rm_id = rm.rm_id 
-inner join cust_details as c on rm.cust_id = c.cust_id where rc.s_id = ".$s_id." and rc.r_status = 'Accepted'";
+inner join cust_details as c on rm.cust_id = c.cust_id inner join accept as a on rc.rc_id = a.rc_id where a.sp_id = ".$sp_id." and rc.r_status = 'Accepted'";
 if(mysqli_query($conn, $select_my_works )){
  
   $result = $conn -> query($select_my_works);

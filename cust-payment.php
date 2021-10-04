@@ -259,7 +259,7 @@ if(mysqli_query($conn, $get_card_details )){
                 <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Total</strong>
                   <h5 class="font-weight-bold">Rs.<?php echo $_SESSION['total_amt']+$_SESSION['total_amt']*.05 ?></h5>
                 </li>
-              </ul><button  onclick="paynow(<?php echo $_SESSION['a_id'].','.$cust_id ?>)" class="btn btn-dark rounded-pill py-2 btn-block">Procceed to checkout</button>
+              </ul><button  onclick="paynow(<?php echo $_SESSION['a_id'].','.$cust_id.','.$isCardAvailable?>)" class="btn btn-dark rounded-pill py-2 btn-block">Procceed to checkout</button>
             </div>
           </div>
 
@@ -271,12 +271,17 @@ if(mysqli_query($conn, $get_card_details )){
   </body>
 
   <script>
-  function paynow(aid,custid) {
-    if(confirm("Pay with the card?")){
-      window.location.href= "pay.php?id="+aid+"&cust="+custid;
+  function paynow(aid,custid,isCardAvailable) {
+    if(isCardAvailable){
+      if(confirm("Pay with the card?")){
+        window.location.href= "pay.php?id="+aid+"&cust="+custid;
+      }
+      else {
+        window.location.href ="cust-myrequest.php"
+      }
     }
     else {
-      window.location.href ="google.com";
+      alert("Please add card first");
     }
   }
    </script>
