@@ -264,7 +264,7 @@ if(isset($_POST["login"])) {
             </div>
             <div class="sign-txt">
                 <div class="form-check " style="text-align: left    ">
-                    <input class="radio-sp form-check-input" type="radio" name="user" value="sp" id="flexRadioDefault2" required>
+                    <input class="radio-sp form-check-input" type="radio" name="user" value="sp" id="flexRadioDefault2" requ>
                     <label class="form-check-label" for="flexRadioDefault1">
                       Service Provider
                     </label>

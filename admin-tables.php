@@ -107,12 +107,60 @@ else if($table_to_be_selected == 'cust'){
       
             }
             echo "</ul></div>";
-            } 
-            else
-            {
-            echo "0 results"; 
             }
-}
+          } 
+else
+{
+  
+    $sql= "select p.total_amount, p.p_id,p.p_date,a.a_id,a.rc_id, a.sp_id, rc.rm_id , rc.s_id, rm.cust_id,rm.r_date,
+    c.cust_fname,c.cust_lname,sp.sp_fname,sp.sp_lname,s.s_name
+      from payment as p
+      inner join accept as a on a.a_id=p.a_id
+      inner join sp_details as sp on sp.sp_id=a.sp_id
+      
+      inner join request_child as rc on rc.rc_id=a.rc_id
+      inner join service_details as s on s.s_id=rc.s_id
+      inner join request_master as rm on rm.rm_id=rc.rm_id
+      inner join cust_details as c on c.cust_id=rm.cust_id
+      order by rm.r_date";
+
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0)
+    {
+       
+        echo '<div class="container">
+        <h2>TRANSACTIONS</h2>
+        <ul class="responsive-table">
+          <li class="table-header">
+            <div class="col col-1">ID</div>
+            <div class="col col-2">CUSTOMER</div>
+            <div class="col col-3">SERVICE PROVIDER</div>
+            <div class="col col-2">SERVICE</div>
+            <div class="col col-1">AMOUNT</div>
+            <div class="col col-2">WORK DATE</div>
+            <div class="col col-2">PAYMENT DATE</div>
+            
+          </li>';
+        
+        while($row = $result->fetch_assoc()) 
+            {
+            echo '<li class="table-row">
+            <div class="col col-1" data-label="ID">'.$row['p_id'].'</div>
+            <div class="col col-2" data-label="Name">'. $row['cust_fname'].' '.$row['cust_lname'].'</div>
+            <div class="col col-3" data-label="Address">'.$row['sp_fname'].' '.$row['sp_lname'].'</div>
+            <div class="col col-2" data-label="Email">'. $row['s_name'].'</div>
+            <div class="col col-1" data-label="Amount">'. $row['total_amount'].'</div>
+            <div class="col col-2" data-label="Work Date">'. $row['r_date'].'</div>
+            <div class="col col-2" data-label="Payment Date">'. $row['p_date'].'</div>';
+
+            }
+            echo "</ul></div>";
+            }
+            else {
+              echo "ERROR";
+            }
+  }
+
 $conn->close();
 
 ?>

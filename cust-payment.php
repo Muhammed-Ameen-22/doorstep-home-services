@@ -10,7 +10,53 @@ inner join request_child as rc on rc.rc_id=a.rc_id
 inner join request_master as rm on rm.rm_id=rc.rm_id
 where rm.cust_id = ".$cust_id." and p.p_status !='Paid'";
 
-$total_amount = isset($_POST['total_amount']) ? $_POST['total_amount'] : "";
+
+if(isset($_POST['total_amount'])){
+  $_SESSION['total_amt'] = $_POST['total_amount'];
+  $total_amount = $_POST['total_amount'];
+
+  $_SESSION['a_id'] = $_POST['accept_id'];
+}
+
+
+
+$get_card_details = "select * from card where cust_id =".$cust_id;
+$isCardAvailable= false;
+if(isset($_POST['addcard'])){
+  $exp = $_POST['Month'];
+  $exp2 = $_POST['Year'];
+
+  
+ $expiryDateTime=strtotime("1 ".$_POST['Month'].$_POST['Year']);
+  $expirydate=date("Y-m-d",$expiryDateTime);
+  
+
+  $add_card = "insert into card (cust_id,card_no,exp_date,cvv) values(".$cust_id.",".$_POST['card-number'].",'".$expirydate."',".$_POST['cvv'].")";
+  if(mysqli_query($conn, $add_card )){
+    echo "<script>alert('Card added succesfully!') </script>";
+  } else{
+    echo "ERROR: Could not able to execute $add_card. " . mysqli_error($conn);
+  }
+}
+
+if(mysqli_query($conn, $get_card_details )){
+  $result = mysqli_query($conn,$get_card_details);
+  if($result->num_rows >0){
+    $isCardAvailable = true;
+    
+    $row = $result->fetch_assoc();
+     
+  }
+  else{
+    $isCardAvailable= false;
+  }
+} else{
+  echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
+}
+
+
+
+
 
 ?>
 <div class="px-4 px-lg-0">
@@ -64,51 +110,37 @@ $total_amount = isset($_POST['total_amount']) ? $_POST['total_amount'] : "";
         <div class="row py-5 p-4 bg-white rounded shadow-sm">
           <div class="col-lg-6">
             <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Card</div>
-            <div class="p-4">
-              <p class="font-italic mb-4">Add card details</p>
+             <div class="p-4">
+              <p class="font-italic mb-4">Card details</p>
               <!-- <div class="input-group mb-4 border rounded-pill p-2"> -->
                 <!-- <input type="text" placeholder="Apply coupon" aria-describedby="button-addon3" class="form-control border-0"> -->
                
               <!-- </div> -->
               <div class="p-4">
-                <form class="credit-card">
+                <form class="credit-card" method="POST" action="">
                   <div class="form-header">
-                    <h4 class="title">Credit card detail</h4>
+                    <h4 class="title">Debit/Credit card detail</h4>
                   </div>
-            
-                  <div class="form-body">
+
+<?php if($isCardAvailable){
+                    $year = date('Y', strtotime($row['exp_date']));
+                    $month = date('F', strtotime($row['exp_date']));
+                    echo '<div class="form-body">
                     <!-- Card Number -->
-                    <input type="text" class="card-number" placeholder="Card Number">
+                    <input type="text" class="card-number" disabled placeholder="Card Number" value='.$row["card_no"].' >
             
                     <!-- Date Field -->
                     <div class="date-field">
                       <div class="month">
-                        <select name="Month">
-                          <option value="january">January</option>
-                          <option value="february">February</option>
-                          <option value="march">March</option>
-                          <option value="april">April</option>
-                          <option value="may">May</option>
-                          <option value="june">June</option>
-                          <option value="july">July</option>
-                          <option value="august">August</option>
-                          <option value="september">September</option>
-                          <option value="october">October</option>
-                          <option value="november">November</option>
-                          <option value="december">December</option>
+                        <select name="Month" disabled>
+                          <option value='.$month.'>'.$month.'</option>
+                        
                         </select>
                       </div>
                       <div class="year">
-                        <select name="Year">
-                          <option value="2016">2016</option>
-                          <option value="2017">2017</option>
-                          <option value="2018">2018</option>
-                          <option value="2019">2019</option>
-                          <option value="2020">2020</option>
-                          <option value="2021">2021</option>
-                          <option value="2022">2022</option>
-                          <option value="2023">2023</option>
-                          <option value="2024">2024</option>
+                        <select name="Year" disabled>
+                          <option value='.$year.'>'.$year.'</option>
+                          
                         </select>
                       </div>
                     </div>
@@ -116,7 +148,7 @@ $total_amount = isset($_POST['total_amount']) ? $_POST['total_amount'] : "";
                     <!-- Card Verification Field -->
                     <div class="card-verification">
                       <div class="cvv-input">
-                        <input type="text" placeholder="CVV">
+                        <input type="text" disabled placeholder="CVV" value='.$row["cvv"].'>
                       </div>
                       <div class="cvv-details">
                         <p>3 or 4 digits usually found <br> on the signature strip</p>
@@ -124,14 +156,85 @@ $total_amount = isset($_POST['total_amount']) ? $_POST['total_amount'] : "";
                     </div>
                     <div class="input-group mb-4 border rounded-pill p-2">
                     <div class="input-group-append border-0">
-                      <button id="button-addon3" type="button" class="btn btn-dark px-4 rounded-pill"><i class="fa fa-gift mr-2"></i>
-                        Add Card</button>
+                     
+                          <button id="button-addon3" type="submit" disabled class="btn btn-dark px-4 rounded-pill"><i class="fa fa-gift mr-2"></i>
+                          Add Card</button>;
+                      
+                      
                     </div>
                     </div>
                     <!-- Buttons -->
                     <!-- <button type="submit" class="proceed-btn"><a href="#">Proceed</a></button>
-                    <button type="submit" class="paypal-btn"><a href="#">Pay With</a></button> -->
+                    <button type="submit" disabled class="paypal-btn"><a href="#">Pay With</a></button> -->
+                  </div>';
+                      }
+                      
+              else {
+
+                echo '<div class="form-body">
+                <!-- Card Number -->
+                <input type="text" class="card-number" name="card-number" placeholder="Card Number">
+        
+                <!-- Date Field -->
+                <div class="date-field">
+                  <div class="month">
+                    <select name="Month">
+                      <option value="january">January</option>
+                      <option value="february">February</option>
+                      <option value="march">March</option>
+                      <option value="april">April</option>
+                      <option value="may">May</option>
+                      <option value="june">June</option>
+                      <option value="july">July</option>
+                      <option value="august">August</option>
+                      <option value="september">September</option>
+                      <option value="october">October</option>
+                      <option value="november">November</option>
+                      <option value="december">December</option>
+                    </select>
                   </div>
+                  <div class="year">
+                    <select name="Year">
+                      <option value="2016">2016</option>
+                      <option value="2017">2017</option>
+                      <option value="2018">2018</option>
+                      <option value="2019">2019</option>
+                      <option value="2020">2020</option>
+                      <option value="2021">2021</option>
+                      <option value="2022">2022</option>
+                      <option value="2023">2023</option>
+                      <option value="2024">2024</option>
+                    </select>
+                  </div>
+                </div>
+        
+                <!-- Card Verification Field -->
+                <div class="card-verification">
+                  <div class="cvv-input">
+                    <input type="text" name="cvv" placeholder="CVV" >
+                  </div>
+                  <div class="cvv-details">
+                    <p>3 or 4 digits usually found <br> on the signature strip</p>
+                  </div>
+                </div>
+                <div class="input-group mb-4 border rounded-pill p-2">
+                <div class="input-group-append border-0">
+                      <button id="button-addon3" type="submit" name="addcard" class="btn btn-dark px-4 rounded-pill"><i class="fa fa-gift mr-2"></i>
+                      Add Card</button>
+
+                  
+                </div>
+                </div>
+                <!-- Buttons -->
+                <!-- <button type="submit" class="proceed-btn"><a href="#">Proceed</a></button>
+                <button type="submit"  class="paypal-btn"><a href="#">Pay With</a></button> -->
+              </div>';
+
+              }
+                  ?>
+
+
+
                 </form>
               </div>
             </div>
@@ -144,13 +247,13 @@ $total_amount = isset($_POST['total_amount']) ? $_POST['total_amount'] : "";
               <p class="font-italic mb-4"></p>
               <ul class="list-unstyled mb-4">
                 <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Work Total 
-                    </strong><strong>Rs.<?php echo "$total_amount" ?></strong></li>
+                    </strong><strong>Rs.<?php echo $_SESSION['total_amt'] ?></strong></li>
                 <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Extra charges</strong>
-                    <strong>Rs.<?php echo "0" ?></strong></li>
+                    <strong>Rs.<?php echo $_SESSION['total_amt']*.05 ?></strong></li>
                 <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Total</strong>
-                  <h5 class="font-weight-bold">Rs.<?php echo "$total_amount" ?></h5>
+                  <h5 class="font-weight-bold">Rs.<?php echo $_SESSION['total_amt']+$_SESSION['total_amt']*.05 ?></h5>
                 </li>
-              </ul><a href="#" class="btn btn-dark rounded-pill py-2 btn-block">Procceed to checkout</a>
+              </ul><button  onclick="paynow(<?php echo $_SESSION['a_id'].','.$cust_id ?>)" class="btn btn-dark rounded-pill py-2 btn-block">Procceed to checkout</button>
             </div>
           </div>
 
@@ -160,4 +263,15 @@ $total_amount = isset($_POST['total_amount']) ? $_POST['total_amount'] : "";
     </div>
   </div>
   </body>
+
+  <script>
+  function paynow(aid,custid) {
+    if(confirm("Pay with the card?")){
+      window.location.href= "pay.php?id="+aid+"&cust="+custid;
+    }
+    else {
+      window.location.href ="google.com";
+    }
+  }
+   </script>
   </html>

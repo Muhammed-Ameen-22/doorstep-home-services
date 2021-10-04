@@ -89,4 +89,9 @@ if(isset($_POST["submit"])) {
 <!-- <i class="fa fa-check" aria-hidden="true"></i> -->
 <h1>Registration Success</h1>
 </body>
+
+<script>
+
+
+<script>
 </html>

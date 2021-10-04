@@ -30,7 +30,7 @@ if(mysqli_query($conn, $sql )){
 }
 
 $select_paid= "select rc.rc_id, rc.r_status, rm.r_date, sr.s_name, concat(sp.sp_fname,' ',sp.sp_lname) as sp_name, 
-sp.sp_phone, p.total_amount,p.p_status
+sp.sp_phone, p.total_amount,p.p_status,a.a_id
 from request_child as rc 
 inner join request_master as rm on rm.rm_id = rc.rm_id
 inner join service_details as sr on sr.s_id = rc.s_id
@@ -149,10 +149,12 @@ if(mysqli_query($conn, $select_paid )){
                     <td>'.$row["r_status"].'</td>
                     <td name="amount">'.$row["total_amount"].'</td>
                     <td>'.$row["p_status"].'</td> 
-                    <td> <input type="hidden" value="'.$row["total_amount"].'" name="total_amount"> </td>';
-                  
+                    <td> <input type="hidden" value="'.$row["total_amount"].'" name="total_amount"> </td>
+                    <td> <input type="hidden" value="'.$row["a_id"].'" name="accept_id"> </td>';
+                    if($row["p_status"] != "Paid"){
                     echo "<td><button type='submit' name='pay'>Pay Now</button></td></tr> </form>";
                     }
+                  }
                   ?>  
             </tbody>
 

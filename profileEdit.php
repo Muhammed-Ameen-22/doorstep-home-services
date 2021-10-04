@@ -2,16 +2,25 @@
 <!DOCTYPE html>
 <html lang="en-US">
   <head>
-  <title>IT SourceCode</title>
+  <title>DHS | Edit Profile</title>
   <link rel="stylesheet" href="libs/css/bootstrap.min.css">
   <link rel="stylesheet" href="libs/style.css">
   </head>
   <?php
-  include 'connection.php';
-  session_start();
-$id=$_SESSION['id'];
-$query=mysqli_query($db,"SELECT * FROM users where user_id='$id'")or die(mysqli_error());
-$row=mysqli_fetch_array($query);
+    require_once "db-connection.php";
+    session_start();
+    $currentUser = $_SESSION["name"];
+    $cust_id = $_SESSION['cust_id'];
+
+    $sql= "select * from cust_details where cust_id=".$cust_id;
+    echo $sql;
+if(mysqli_query($conn, $sql )){
+  $result = $conn -> query($sql);
+  $row = $result->fetch_assoc();
+} else{
+  echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
+}
+
   ?>
   <h1>User Profile</h1>
 <div class="profile-input-field">
@@ -19,19 +28,19 @@ $row=mysqli_fetch_array($query);
         <form method="post" action="#" >
           <div class="form-group">
             <label>Fullname</label>
-            <input type="text" class="form-control" name="fname" style="width:20em;" placeholder="Enter your Fullname" value="<?php echo $row['full_name']; ?>" required />
+            <input type="text" class="form-control" name="fname" style="width:20em;" placeholder="Enter your Fullname" value="<?php echo $row['cust_fname']." ".$row['cust_lname']; ?>" required />
           </div>
           <div class="form-group">
             <label>Gender</label>
-            <input type="text" class="form-control" name="gender" style="width:20em;" placeholder="Enter your Gender" required value="<?php echo $row['gender']; ?>" />
+            <input type="text" class="form-control" name="gender" style="width:20em;" placeholder="Enter your Gender" required value="<?php echo $row['cust_house']; ?>" />
           </div>
           <div class="form-group">
             <label>Age</label>
-            <input type="number" class="form-control" name="age" style="width:20em;" placeholder="Enter your Age" value="<?php echo $row['age']; ?>">
+            <input type="number" class="form-control" name="age" style="width:20em;" placeholder="Enter your Age" value="<?php echo $row['cust_city']; ?>">
           </div>
           <div class="form-group">
             <label>Address</label>
-            <input type="text" class="form-control" name="address" style="width:20em;" required placeholder="Enter your Address" value="<?php echo $row['address']; ?>"></textarea>
+            <input type="text" class="form-control" name="address" style="width:20em;" required placeholder="Enter your Address" value="<?php echo $row['cust_city']; ?>"></textarea>
           </div>
           <div class="form-group">
             <input type="submit" name="submit" class="btn btn-primary" style="width:20em; margin:0;"><br><br>

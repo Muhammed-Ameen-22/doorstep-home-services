@@ -156,13 +156,16 @@ if(isset($_POST["submit"])) {
           </div>
           <div class="input-box">
             <span class="details">Password</span>
-            <input type="password" name="password" placeholder="Enter your password" required>
+            <input type="password" name="password" id="password" placeholder="Enter your password" required>
           </div>
           <div class="input-box">
             <span class="details">Confirm Password</span>
-            <input type="password" placeholder="Confirm your password" >
+            <input type="password" name="confirm-pass" id="confirmPassword" onchange="matchPassword()" placeholder="Confirm your password" required>
+            <span class="details" id="confirmPassError"></span>
           </div>
+          
         </div>
+
        
           <select name="service" class="btn btn-primary dropdown-toggle btn-drop" id="service"
            style="background-color: rgb(0, 0, 0); border-color: rgb(255, 35, 35);">
@@ -184,4 +187,21 @@ if(isset($_POST["submit"])) {
   </div>
 
 </body>
+
+<script>
+
+function matchPassword() {  
+  var pw1 = document.getElementById("password").value;  
+  var pw2 = document.getElementById("confirmPassword").value;
+  console.log(pw1,"pass1");
+  console.log(pw2,"pass2");  
+  if(pw1 != pw2)  
+  {   
+    document.getElementById("confirmPassError").innerHTML= "Password do not match" ; 
+  } else {
+    document.getElementById("confirmPassError").innerHTML= "" ; 
+  }  
+}  
+
+</script>
 </html>

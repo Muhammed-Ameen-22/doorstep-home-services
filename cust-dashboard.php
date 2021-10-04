@@ -21,13 +21,18 @@ if(isset($_POST['book'])){
     $res = mysqli_query($conn, $sql_last_inserted_id);
     $last_inserted_id = mysqli_fetch_array($res);
     $id = $last_inserted_id['id'];
+
+    
+
     $sql_insert_request_child = "insert into request_child values(NULL,$id,'$service','Requested',$pincode)";
     //echo $sql_insert_request_child;
-    if(mysqli_query($conn, $sql_insert_request_child)){
-      //  header("location: cust-myrequests.php");
+    for($i=0;$i<$quantity;$i++){
+        if(mysqli_query($conn, $sql_insert_request_child)){
+        //  header("location: cust-myrequests.php");
 
-    } else{
-        echo "ERROR: Could not able to execute $sql_insert_request_table. " . mysqli_error($conn);
+        } else{
+            echo "ERROR: Could not able to execute $sql_insert_request_table. " . mysqli_error($conn);
+        }
     }
 }
 else if(isset($_POST['service']) && isset($_POST['pincode'])){
@@ -153,7 +158,7 @@ else if(isset($_POST['service']) && isset($_POST['pincode'])){
 								<div class="col-md-4">
 									<div class="form-group">
 										<span class="form-label">Quantity</span>
-										<input class="form-control" min="1" max="1" type="number" placeholder="Quantity" name="quantity" >
+										<input class="form-control" min="1" max="3" type="number" placeholder="Quantity" name="quantity" >
 									</div>
 									</div>
                                     <div class="col-md-4">

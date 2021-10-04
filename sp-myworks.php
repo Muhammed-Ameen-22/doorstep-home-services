@@ -39,7 +39,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['COMPLETE'])){
   }
 }
 $select_completed_works= "select rc.rc_id, c.cust_fname, c.cust_house,c.cust_city,rm.r_date,
-pay.total_amount,a.a_id from request_child as rc 
+pay.total_amount,a.a_id,pay.p_status from request_child as rc 
 inner join request_master as rm on rc.rm_id = rm.rm_id 
 inner join accept as a on rc.rc_id=a.rc_id
 inner join payment as pay on a.a_id=pay.a_id
@@ -139,6 +139,7 @@ if(mysqli_query($conn, $select_completed_works )){
             <th class ="col-2" scope="col">Address</th>
             <th class ="col-2" scope="col">Work date</th>
             <th class="col-1">Amount</th>
+            <th class="col-1">Status</th>
             
         
           </tr>
@@ -148,7 +149,7 @@ if(mysqli_query($conn, $select_completed_works )){
             <?php 
               while($row = $completed->fetch_assoc()) {
                 echo ' <tr><td>'.$row["rc_id"].'</td>  <td>'.$row["cust_fname"].'</td> <td>'.$row["cust_house"].'</td> 
-                <td>'.$row["r_date"].'</td> <td>'.$row["total_amount"].'</td> </tr>' ;
+                <td>'.$row["r_date"].'</td> <td>'.$row["total_amount"].'</td> <td>'.$row["p_status"].'</td>   </tr>' ;
               }
               ?>  
         </tbody>

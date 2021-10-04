@@ -127,6 +127,9 @@ form .input-box span.details{
  select:active, select:hover {
   outline-color: red
 }
+#confirmPassError{
+  color:red;
+}
  form .button input{
    height: 100%;
    width: 100%;
@@ -140,6 +143,7 @@ form .input-box span.details{
    transition: all 0.3s ease;
    background: linear-gradient(135deg, #000000, #fa4242);
  }
+ 
  select.decorated option:hover {
   box-shadow: 0 0 10px 100px #ff0000 inset;
 }

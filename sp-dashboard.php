@@ -5,7 +5,13 @@ $currentUser = $_SESSION["name"];
 $s_id = $_SESSION['s_id'];
 $sp_id=$_SESSION['sp_id'];
 $sql= "select rc.rc_id, c.cust_fname, rm.r_date from request_child as rc inner join request_master as rm on rc.rm_id = rm.rm_id 
-inner join cust_details as c on rm.cust_id = c.cust_id where rc.s_id = ".$s_id." and r_status = 'Requested'" ;
+inner join cust_details as c on rm.cust_id = c.cust_id where rc.s_id = ".$s_id." and r_status = 'Requested' and rc.rc_id not in 
+(select rm_i
+
+
+
+d from accept where sp_id =".$sp_id.")" ;
+echo $sql;
 
 if(mysqli_query($conn, $sql )){
   // $result = mysqli_query($conn,$sql);
@@ -17,6 +23,8 @@ if(mysqli_query($conn, $sql )){
 
 if($_SERVER['REQUEST_METHOD'] == "GET" and isset($_GET['ACCEPT'])){
   $rc_id=$_GET['req_id'];
+  $accepted_count = "select accepted_quantity,requested_quantity from request_master as rm inner join request_child as rc on rm.rm_id =rc.rm_id";
+  echo $accepted_count;
   $update_req_status = "update request_child set r_status ='Accepted' where rc_id = ".$_GET['req_id'];
   if(mysqli_query($conn, $update_req_status )){
     //updated request_child status to Accepted
