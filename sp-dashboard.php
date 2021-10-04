@@ -1,6 +1,9 @@
 <?php
 require_once "db-connection.php";
 session_start();
+if(!isset($_SESSION["sp_id"])){
+  header('location: index.php');
+}
 $currentUser = $_SESSION["name"];
 $s_id = $_SESSION['s_id'];
 $sp_id=$_SESSION['sp_id'];
@@ -43,6 +46,8 @@ if($_SERVER['REQUEST_METHOD'] == "GET" and isset($_GET['ACCEPT'])){
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Home | DHS</title>
+
+
     <link href="stylesheets/bootstrap.css" rel="stylesheet">
     <link href="stylesheets/style.css" rel="stylesheet">
     <link href="stylesheets/animate.min.css" rel="stylesheet">
@@ -50,12 +55,15 @@ if($_SERVER['REQUEST_METHOD'] == "GET" and isset($_GET['ACCEPT'])){
     <link href="stylesheets/sp-dashboard.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Montserrat:300,400,500,700"
         rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <script src="javascript/bootstrap.js" type="text/javascript"></script>
+   
     <script src="javascript/bootstrap.bundle.min.js" type="text/javascript"></script>
     <script src="javascript/bootstrap.bundle.js" type="text/javascript"></script>
    
+   
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        
+    <script src="javascript/bootstrap.js" type="text/javascript"></script>
 </head>
 
 <body>
@@ -78,8 +86,12 @@ if($_SERVER['REQUEST_METHOD'] == "GET" and isset($_GET['ACCEPT'])){
                         <a class="nav-link"  href="sp-myworks.php"> My works</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="sp-profile-edit.php"> Profile </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="logout.php"> Log out </a>
                     </li>
+                   
                 </ul>
             </div>
         </div>
@@ -125,8 +137,5 @@ if($_SERVER['REQUEST_METHOD'] == "GET" and isset($_GET['ACCEPT'])){
       </table>
       </div>
     </body>
-    <script> 
 
-
-</script>
     </html>

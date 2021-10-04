@@ -1,9 +1,14 @@
 <?php
+session_start();
+if(!isset($_SESSION["cust_id"])){
+    header('location: index.php');
+}
 require_once "db-connection.php";
 $service_providers_available ="";
 $pincode="";
-session_start();
+
 $currentUser = $_SESSION["name"];
+$count[0]=-1;
 if(isset($_POST['book'])){
     $service=$_POST['service'];
     $pincode=$_POST['pincode'];
@@ -40,9 +45,10 @@ else if(isset($_POST['service']) && isset($_POST['pincode'])){
     $service=$_POST['service'];
     $pincode=$_POST['pincode'];
     $_SESSION['pincode']=$pincode;
+    
     // echo "Hello: $service";
     // echo "Hello: $pincode";
-    $sql="select count(*) as count from sp_details where s_id='".$service."' AND sp_pincode='".$pincode."'";
+    $sql="select count(*) as count from sp_details where s_id='".$service."' AND sp_pincode='".$pincode."' AND sp_status='Active'";
    // $sql="select count(*) as count from sp_details";
     $result=mysqli_query($conn,$sql);
     $count = mysqli_fetch_array($result);
@@ -92,6 +98,7 @@ else if(isset($_POST['service']) && isset($_POST['pincode'])){
 </head>
 
 <body>
+
 	<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
 
         <div class="container-fluid">
@@ -109,6 +116,9 @@ else if(isset($_POST['service']) && isset($_POST['pincode'])){
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="cust-myrequests.php"> My Requests</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="cust-profile-edit.php"> Profile </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="logout.php"> Logout</a>
@@ -153,12 +163,16 @@ else if(isset($_POST['service']) && isset($_POST['pincode'])){
 								</div>
                                <span class="form-label form-result"> <h6><?php echo $service_providers_available; ?> </h6></span>
 							</div>
+                            <?php 
+                            if($count[0]>0)
+                            {
+                            echo '
 							<div class="row response">
 
 								<div class="col-md-4">
 									<div class="form-group">
 										<span class="form-label">Quantity</span>
-										<input class="form-control" min="1" max="3" type="number" placeholder="Quantity" name="quantity" >
+										<input class="form-control" min="1" max= <?php echo $count[0]?> type="number" placeholder="Quantity" name="quantity" >
 									</div>
 									</div>
                                     <div class="col-md-4">
@@ -171,8 +185,10 @@ else if(isset($_POST['service']) && isset($_POST['pincode'])){
 									<div class="form-btn">
 										<button class="submit-btn" name="book">Request</button>
 									</div>
-							</div>
-							</div>
+							 </div>
+							</div>';
+                            }
+                            ?>
 						</form>
 					</div>
 				
@@ -184,6 +200,7 @@ else if(isset($_POST['service']) && isset($_POST['pincode'])){
 </body>
 <script type="text/javascript">
   document.getElementById('service').value = "<?php echo $service;?>";
+
 </script>
 </html>
  

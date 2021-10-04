@@ -12,6 +12,9 @@
 <?php
 include('db-connection.php');
 session_start();
+if(!isset($_SESSION["cust_id"])){
+  header('location: index.php');
+}
 $currentUser = $_SESSION["name"];
 $cust_id = $_SESSION['cust_id'];
 
@@ -99,6 +102,10 @@ if ($result->num_rows > 0)
                 
               .'<div class="button">
                 <input type="submit" value="Update" name="submit">
+                
+              </div>
+              <div class="button">
+              <input type="button" value="Cancel" name="cancel" onclick=window.location="cust-dashboard.php">
               </div>
             </form>
           </div>
@@ -206,7 +213,7 @@ function matchPassword() {
       if(isset($_POST['submit'])){
         $fname = $_POST['fname'];
         $lname = $_POST['lname'];
-        $house = $_POST['fname'];
+        $house = $_POST['house'];
         $city = $_POST['city'];
         $district = $_POST['district'];
         $pincode= $_POST['pincode'];
@@ -216,8 +223,8 @@ function matchPassword() {
         
       $query = "UPDATE cust_details SET cust_fname = '$fname',
       cust_lname = '$lname',
-      cust_fname = '$fname',
       cust_house = '$house',
+      cust_city='$city',
       cust_dist = '$district',
       cust_pincode = '$pincode',
       cust_username = '$username',
@@ -231,7 +238,7 @@ function matchPassword() {
                     
                     
                      echo '<script >
-            alert("Update Successfull.");
+            alert("Update Successful.");
             window.location.href="cust-dashboard.php";
         </script>';
         

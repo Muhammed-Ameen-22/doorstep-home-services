@@ -1,6 +1,9 @@
 <?php
 require_once "db-connection.php";
 session_start();
+if(!isset($_SESSION["cust_id"])){
+  header('location: index.php');
+}
 $currentUser = $_SESSION["name"];
 $cust_id = $_SESSION['cust_id'];
 
@@ -87,6 +90,9 @@ if(mysqli_query($conn, $select_paid )){
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active"> My Requests</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="cust-profile-edit.php"> Profile </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="logout.php"> Log out </a>

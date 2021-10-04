@@ -78,6 +78,9 @@ if(isset($_GET['id'])){
                         <a class="nav-link" href="cust-myrequests.php"> My Requests</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="cust-profile-edit.php"> Profile </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="logout.php"> Logout</a>
                     </li>
                 </ul>

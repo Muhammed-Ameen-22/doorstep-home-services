@@ -1,6 +1,9 @@
 <?php
 require_once "db-connection.php";
 session_start();
+if(!isset($_SESSION["cust_id"])){
+  header('location: index.php');
+}
 $currentUser = $_SESSION["name"];
 $cust_id = $_SESSION['cust_id'];
 $sql= "select p.total_amount, p.a_id, a.rc_id, a.sp_id, rc.rm_id , rm.cust_id
@@ -88,20 +91,23 @@ if(mysqli_query($conn, $get_card_details )){
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="#"> Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#"> Login</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#"> About Us</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#"> Contact </a>
-                        </li>
-                    </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" > <?php echo "Hi, ".$currentUser; ?></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"> Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="cust-myrequests.php"> My Requests</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="cust-profile-edit.php"> Profile </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="logout.php"> Logout</a>
+                    </li>
+                </ul>
                 </div>
             </div>
         </nav>

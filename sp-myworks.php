@@ -1,6 +1,9 @@
 <?php
 require_once "db-connection.php";
 session_start();
+if(!isset($_SESSION["sp_id"])){
+  header('location: index.php');
+}
 $currentUser = $_SESSION["name"];
 $s_id = $_SESSION['s_id'];
 $sp_id = $_SESSION['sp_id'];
@@ -90,6 +93,9 @@ if(mysqli_query($conn, $select_completed_works )){
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link"  href="#"> My works</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="sp-profile-edit.php"> Profile </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="logout.php"> Log out </a>
