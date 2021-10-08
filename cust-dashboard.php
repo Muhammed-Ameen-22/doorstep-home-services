@@ -131,7 +131,7 @@ else if(isset($_POST['service']) && isset($_POST['pincode'])){
 	<form action="cust-dashboard.php" method="POST">
 	<div id="booking" class="section">
 		<div class="section-center">
-			<div class="container">
+			<div class="container" style="margin-top:-10%">
 				
 					<div class="booking-form">
 						<form>
@@ -153,7 +153,7 @@ else if(isset($_POST['service']) && isset($_POST['pincode'])){
 								<div class="col-md-4">
 									<div class="form-group">
 										<span class="form-label">Pincode</span>
-										<input class="form-control" id="pincode" type="text" placeholder="Pincode" name="pincode" value ="<?php echo$pincode ?>">
+										<input class="form-control" id="pincode" type="text" placeholder="Pincode" name="pincode" required pattern="[0-9]{6}" title="Enter 6 digit valid pincode" value ="<?php echo$pincode ?>">
 									</div>
 								</div>
 								<div class="col-md-4">
@@ -172,13 +172,13 @@ else if(isset($_POST['service']) && isset($_POST['pincode'])){
 								<div class="col-md-4">
 									<div class="form-group">
 										<span class="form-label">Quantity</span>
-										<input class="form-control" min="1" max='.$count[0].' type="number" placeholder="Quantity" name="quantity" >
+										<input class="form-control" min="1" max='.$count[0].' type="number" placeholder="Quantity" name="quantity" required>
 									</div>
 									</div>
                                     <div class="col-md-4">
 									<div class="form-group">
 										<span class="form-label">Date</span>
-										<input class="form-control" type="date" name ="req-date">
+										<input class="form-control" type="date" id="req-date-field" name ="req-date" required>
 									</div>
 									</div>
 								<div class="col-md-4">
@@ -199,7 +199,23 @@ else if(isset($_POST['service']) && isset($_POST['pincode'])){
     </div>
 </body>
 <script type="text/javascript">
-  document.getElementById('service').value = "<?php echo $service;?>";
+    document.getElementById('service').value = "<?php echo $service;?>";
+
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; //January is 0!
+    var yyyy = today.getFullYear();
+
+    if (dd < 10) {
+        dd = '0' + dd;
+    }
+
+    if (mm < 10) {
+        mm = '0' + mm;
+    } 
+        
+    today = yyyy + '-' + mm + '-' + dd;
+    document.getElementById("req-date-field").setAttribute("min", today);
 
 </script>
 </html>

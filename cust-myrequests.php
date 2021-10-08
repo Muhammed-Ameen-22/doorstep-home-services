@@ -32,6 +32,19 @@ if(mysqli_query($conn, $sql )){
   echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
 }
 
+$requested="select rc.rc_id, rc.r_status, rm.r_date, sr.s_name
+from request_child as rc 
+inner join request_master as rm on rm.rm_id = rc.rm_id
+inner join service_details as sr on sr.s_id = rc.s_id
+where rm.cust_id = ".$cust_id." and rc.r_status ='Requested'";
+if(mysqli_query($conn, $requested )){
+  // $result = mysqli_query($conn,$sql);
+  // $my_request = mysqli_fetch_array($result);
+  $result_requested = $conn -> query($requested);
+} else{
+  echo "ERROR: Could not able to execute $requested. " . mysqli_error($conn);
+}
+
 $select_paid= "select rc.rc_id, rc.r_status, rm.r_date, sr.s_name, concat(sp.sp_fname,' ',sp.sp_lname) as sp_name, 
 sp.sp_phone, p.total_amount,p.p_status,a.a_id
 from request_child as rc 
@@ -111,6 +124,32 @@ if(mysqli_query($conn, $select_paid )){
             <th class="col-1" scope="col">Request ID</th>
             <th  class="col-2" scope="col">Service</th>
             <th class ="col-3" scope="col">Requested date</th>
+            <th class="col-1" scope="col"></th>
+            
+          </tr>
+        </thead>
+        <tbody>
+          
+            <?php 
+              while($row = $result_requested->fetch_assoc()) {
+                echo '<tr><td>'.$row["rc_id"].'</td>  <td>'.$row["s_name"].'</td> <td>'.$row["r_date"].'</td>
+                <td> <button class="btn btn-danger" onclick="confirmDeletion('.$row["rc_id"].')"> CANCEL</button> 
+               </tr>';
+              }
+              ?>  
+         </tbody>
+       </table>
+       </div>
+<br><br>
+
+<h2><center>ACCEPTED REQUESTS</center></h2>
+<div class="req-table mt-100">
+      <table class="table table-hover table-dark">
+        <thead>
+          <tr>
+            <th class="col-1" scope="col">Request ID</th>
+            <th  class="col-2" scope="col">Service</th>
+            <th class ="col-3" scope="col">Requested date</th>
             <th class="col-3" scope="col">Accepted by</th>
             <th class="col-1" scope="col">Phone number</th>
             <th class="col-1" scope="col"></th>
@@ -129,7 +168,7 @@ if(mysqli_query($conn, $select_paid )){
          </tbody>
        </table>
        </div>
-
+       <br><br>
        <h2><center>COMPLETED REQUESTS</center></h2>
        <div class="req-table mt-100">
         <form action="cust-payment.php" method="POST">
@@ -156,9 +195,10 @@ if(mysqli_query($conn, $select_paid )){
                     <td name="amount">'.$row["total_amount"].'</td>
                     <td>'.$row["p_status"].'</td> 
                     <td> <input type="hidden" value="'.$row["total_amount"].'" name="total_amount"> </td>
-                    <td> <input type="hidden" value="'.$row["a_id"].'" name="accept_id"> </td>';
+                    ';
                     if($row["p_status"] != "Paid"){
-                    echo "<td><button type='submit' name='pay'>Pay Now</button></td></tr> </form>";
+                    echo "<td><button class='submit-btn' type='submit' name='pay'>Pay Now</button></td>
+                    <td> <input type='hidden' value='".$row['a_id']."' name='accept_id'> </td></tr> </form>";
                     }
                   }
                   ?>  
@@ -168,4 +208,14 @@ if(mysqli_query($conn, $select_paid )){
        </form>
       </div>
      </body>
+     <script> 
+
+function confirmDeletion(id){
+ 
+  if(confirm('Do you want to cancel the request?')){
+    window.location.href= "cancelreq.php?cust="+id;  
+  }
+}
+</script>
+
      </html>

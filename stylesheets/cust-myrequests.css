@@ -16,3 +16,16 @@
     flex-basis: 10%;
   }
   
+  .submit-btn {
+    color: #fff;
+    background-color: #737373;
+    font-weight: 400;
+    height: 40px;
+    font-size: 14px;
+    border: none;
+    width: 160%;
+    border-radius: 8px;
+    text-transform: uppercase;
+    -webkit-transition: 0.2s all;
+    transition: 0.2s all;
+  }

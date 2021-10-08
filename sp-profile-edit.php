@@ -65,15 +65,15 @@ if ($result->num_rows > 0)
                 
                 <div class="input-box">
                   <span class="details">Pincode</span>
-                  <input type="text" name="pincode" placeholder="Enter your Pincode" required value='.  $row['sp_pincode'].'>
+                  <input type="text" name="pincode" placeholder="Enter your Pincode" required pattern="[0-9]{6}" title="Enter 6 digit valid pincode" value='.  $row['sp_pincode'].'>
                 </div>
                 <div class="input-box">
                   <span class="details">Email</span>
-                  <input type="text" name="email" placeholder="Enter your email" required value='. $row['sp_username'].'>
+                  <input type="text" name="email" placeholder="Enter your email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" title="something@xyz.com" value='. $row['sp_username'].'>
                 </div>
                 <div class="input-box">
                   <span class="details">Phone Number</span>
-                  <input type="text" name="phno" placeholder="Enter your number" required value='.  $row['sp_phone'].'>
+                  <input type="text" name="phno" placeholder="Enter your number" required pattern="[0-9]{10}" title="Enter 10 digit mobile number" value='.  $row['sp_phone'].'>
                 </div>
                 <div class="input-box">
                   <span class="details">Password</span>

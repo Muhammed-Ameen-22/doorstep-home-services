@@ -71,11 +71,11 @@ if(isset($_POST["login"])) {
                         exit();
                     }
                     else{
-                        echo '<script>alert("Wrong Username / Password");</script>';
+                        echo '<script>alert("Wrong Username / Password"); location.href = "index.php";</script>';
                     }
                 }
                 else{
-                    echo '<script>alert("Wrong Username");</script>';
+                    echo '<script>alert("Wrong Username"); location.href = "index.php";</script>';
                     exit();
                 }
             }
@@ -256,7 +256,7 @@ if(isset($_POST["login"])) {
             </p>
             <div class="sign-txt" style="text-align: left;">
                 <div class="form-check ">
-                    <input class="radio-cus form-check-input" type="radio" name="user"  value="cust" id="flexRadioDefault1" required>
+                    <input class="radio-cus form-check-input" type="radio" name="user"  value="cust" id="flexRadioDefault1" checked required>
                     <label class="form-check-label" for="flexRadioDefault1">
                       Customer
                     </label>
@@ -287,8 +287,8 @@ if(isset($_POST["login"])) {
             </div>
             <div class="error error-txt">Password can't be blank</div>
           </div>
-          <div class="pass-txt"><a href="#">Forgot password?</a></div>
-          <input type="submit" value="Login" name="login">
+          <!-- <div class="pass-txt"><a href="#">Forgot password?</a></div> -->
+          <input type="submit" style="background-color:red" value="Login" name="login">
         </form>
         <div class="sign-txt">Not yet member? <a href="registration.php">Signup now</a></div>
       </div>

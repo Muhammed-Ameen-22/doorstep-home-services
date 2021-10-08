@@ -42,6 +42,20 @@ if(isset($_POST['addcard'])){
   }
 }
 
+if(isset($_POST['delete'])){
+  $delete_card_details = "delete from card where cust_id =".$cust_id;
+
+  if(mysqli_query($conn, $delete_card_details )){
+      $isCardAvailable = false;
+    }
+  else{
+    echo "ERROR: Could not able to execute $delete_card_details. " . mysqli_error($conn);
+  }
+}
+
+
+
+
 if(mysqli_query($conn, $get_card_details )){
   $result = mysqli_query($conn,$get_card_details);
   if($result->num_rows >0){
@@ -115,9 +129,9 @@ if(mysqli_query($conn, $get_card_details )){
       <div class="container">
         <div class="row py-5 p-4 bg-white rounded shadow-sm">
           <div class="col-lg-6">
-            <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Card</div>
+            <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Debit/Credit card detail</div>
              <div class="p-4">
-              <p class="font-italic mb-4">Card details</p>
+              <p class="font-italic mb-4"></p>
               <!-- <div class="input-group mb-4 border rounded-pill p-2"> -->
                 <!-- <input type="text" placeholder="Apply coupon" aria-describedby="button-addon3" class="form-control border-0"> -->
                
@@ -125,7 +139,7 @@ if(mysqli_query($conn, $get_card_details )){
               <div class="p-4">
                 <form class="credit-card" method="POST" action="">
                   <div class="form-header">
-                    <h4 class="title">Debit/Credit card detail</h4>
+                    <h4 class="title">Your Card</h4>
                   </div>
 
 <?php if($isCardAvailable){
@@ -163,9 +177,10 @@ if(mysqli_query($conn, $get_card_details )){
                     <div class="input-group mb-4 border rounded-pill p-2">
                     <div class="input-group-append border-0">
                      
-                          <button id="button-addon3" type="submit" disabled class="btn btn-dark px-4 rounded-pill"><i class="fa fa-gift mr-2"></i>
-                          Add Card</button>;
-                      
+                          <button id="button-addon3" type="submit" disabled class="btn btn-dark px-4 rounded-pill">
+                          Add Card</button> &nbsp &nbsp &nbsp &nbsp
+                          <button id="button-addon3" type="submit" name="delete" class="btn btn-dark px-4 rounded-pill">
+                          Delete Card</button>
                       
                     </div>
                     </div>
@@ -179,12 +194,12 @@ if(mysqli_query($conn, $get_card_details )){
 
                 echo '<div class="form-body">
                 <!-- Card Number -->
-                <input type="text" class="card-number" name="card-number" placeholder="Card Number">
+                <input type="text" class="card-number" name="card-number" required placeholder="Card Number" pattern="[0-9]{16}" title="Enter 16 digit card No." maxlength="16">
         
                 <!-- Date Field -->
                 <div class="date-field">
                   <div class="month">
-                    <select name="Month">
+                    <select name="Month" required>
                       <option value="january">January</option>
                       <option value="february">February</option>
                       <option value="march">March</option>
@@ -200,16 +215,17 @@ if(mysqli_query($conn, $get_card_details )){
                     </select>
                   </div>
                   <div class="year">
-                    <select name="Year">
-                      <option value="2016">2016</option>
-                      <option value="2017">2017</option>
-                      <option value="2018">2018</option>
-                      <option value="2019">2019</option>
-                      <option value="2020">2020</option>
+                    <select name="Year" required>
+                     
                       <option value="2021">2021</option>
                       <option value="2022">2022</option>
                       <option value="2023">2023</option>
                       <option value="2024">2024</option>
+                      <option value="2025">2025</option>
+                      <option value="2026">2026</option>
+                      <option value="2027">2027</option>
+                      <option value="2028">2028</option>
+                   
                     </select>
                   </div>
                 </div>
@@ -217,7 +233,7 @@ if(mysqli_query($conn, $get_card_details )){
                 <!-- Card Verification Field -->
                 <div class="card-verification">
                   <div class="cvv-input">
-                    <input type="text" name="cvv" placeholder="CVV" >
+                    <input type="text" name="cvv" required placeholder="CVV" >
                   </div>
                   <div class="cvv-details">
                     <p>3 or 4 digits usually found <br> on the signature strip</p>
@@ -225,7 +241,7 @@ if(mysqli_query($conn, $get_card_details )){
                 </div>
                 <div class="input-group mb-4 border rounded-pill p-2">
                 <div class="input-group-append border-0">
-                      <button id="button-addon3" type="submit" name="addcard" class="btn btn-dark px-4 rounded-pill"><i class="fa fa-gift mr-2"></i>
+                      <button id="button-addon3" type="submit" name="addcard" class="btn btn-dark px-4 rounded-pill">
                       Add Card</button>
 
                   
@@ -273,6 +289,7 @@ if(mysqli_query($conn, $get_card_details )){
   <script>
   function paynow(aid,custid,isCardAvailable) {
     if(isCardAvailable){
+
       if(confirm("Pay with the card?")){
         window.location.href= "pay.php?id="+aid+"&cust="+custid;
       }

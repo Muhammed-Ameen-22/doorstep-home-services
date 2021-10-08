@@ -144,15 +144,15 @@ if(isset($_POST["submit"])) {
           
           <div class="input-box">
             <span class="details">Pincode</span>
-            <input type="text" name="pincode" placeholder="Enter your Pincode" required>
+            <input type="text" name="pincode" placeholder="Enter your Pincode" required pattern="[0-9]{6}" title="Enter 6 digit valid pincode">
           </div>
           <div class="input-box">
             <span class="details">Email</span>
-            <input type="text" name="email" placeholder="Enter your email" required>
+            <input type="email" name="email" placeholder="Enter your Email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" title="something@xyz.com">
           </div>
           <div class="input-box">
             <span class="details">Phone Number</span>
-            <input type="text" name="phno" placeholder="Enter your number" required>
+            <input type="text" name="phno" placeholder="Enter your number" required pattern="[0-9]{10}" title="Enter 10 digit mobile number">
           </div>
           <div class="input-box">
             <span class="details">Password</span>
@@ -168,7 +168,7 @@ if(isset($_POST["submit"])) {
 
        
           <select name="service" class="btn btn-primary dropdown-toggle btn-drop" id="service"
-           style="background-color: rgb(0, 0, 0); border-color: rgb(255, 35, 35);">
+           style="background-color: rgb(0, 0, 0); border-color: rgb(00,00,00);">
             <div class="dropdown-menu" >
               <option class="dropdown-item" value="" disabled selected hidden > Select Service</option>
               <option value=101>Electrician</option>
