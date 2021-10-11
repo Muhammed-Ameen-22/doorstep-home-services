@@ -30,6 +30,10 @@
   
 <?php
 require_once "db-connection.php";
+$dateFrom=date("2021-01-01");
+$dateTo=date("2022-01-01");
+$total_sum_amount =0;
+
 if(isset($_GET["cust_id"]))
 {
 $table_to_be_selected = 'cust';
@@ -43,6 +47,14 @@ $sp_id=$_GET["sp_id"];
 }
 
 if($table_to_be_selected == 'sp'){
+
+    if(isset($_GET["dateFrom"]) && isset($_GET["dateTo"]))
+    {
+       
+     $dateFrom=$_GET["dateFrom"];
+     $dateTo=$_GET["dateTo"];   
+    }
+
     $sql = "SELECT rm.r_date, rm.cust_id, a.rc_id, p.a_id, p.total_amount, p.p_date,p.p_status, 
     concat(c.cust_fname,' ',c.cust_lname) as cust_name 
     from request_master as rm
@@ -51,15 +63,26 @@ if($table_to_be_selected == 'sp'){
     inner join payment as p on p.a_id=a.a_id 
     inner join cust_details as c on c.cust_id=rm.cust_id
     inner join sp_details as sp on sp.sp_id=a.sp_id
-    where sp.sp_id=".$sp_id;
-    
-    $result = $conn->query($sql);
-    if ($result->num_rows > 0)
-    {
-     echo '<div class="container">
-     <h2>Works of '. $sp_fname.'</h2>
+    where rm.r_date > '". $dateFrom ."'and rm.r_date <'".$dateTo."' and  
+    sp.sp_id=".$sp_id;
 
-     <input type="date">
+    $result = $conn->query($sql);
+    echo '<div class="container">
+     <h2>Works of '. $sp_fname.'</h2>
+        <br>
+        <form action="#" method="GET">
+     <center>
+         &nbsp &nbsp &nbsp Date From : <input type="date" name="dateFrom" value="'.$dateFrom.'">
+        &nbsp &nbsp &nbsp
+     Date To : <input class="form-group" type="date" class="dateFilter" name="dateTo" value="'.$dateTo.'">
+     &nbsp &nbsp &nbsp
+     &nbsp &nbsp &nbsp
+     <input type="hidden" value="'.$sp_fname.'" name="name">
+     <input type="hidden" value="'.$sp_id.'" name="sp_id">
+     <button class="submit-btn" name="search">Search</button>
+     </center>
+     </form>
+     <br> <br>
      <ul class="responsive-table">
        <li class="table-header">
          <div class="col col-1">ID</div>
@@ -71,9 +94,15 @@ if($table_to_be_selected == 'sp'){
          
          
        </li>';
+    if ($result->num_rows > 0)
+    {
+     
 
     while($row = $result->fetch_assoc()) 
         {
+
+            if($row['r_date']>$dateFrom && $row['r_date'] < $dateTo ){
+
             echo '<li class="table-row">
             <div class="col col-1" data-label="ID">'.$row['rc_id'].'</div>
             <div class="col col-3" data-label="Name">'. $row['cust_name'].'</div>
@@ -82,19 +111,30 @@ if($table_to_be_selected == 'sp'){
             <div class="col col-2" data-label="Phone">'. $row['p_status'].'</div>
             <div class="col col-2" data-label="Phone">'. $row['p_date'].'</div>
       </li>';
+      $total_sum_amount = $total_sum_amount + $row['total_amount'];
   
         }
-        echo "</ul></div>";
-        } 
-        else
-        {
-        echo "0 results"; 
-        }
+    }
+
+        
+       echo "<h5 align='right'>Total amount : Rs. $total_sum_amount/-</h5>";
+            echo "</ul></div>";
+            }
+    else {
+        echo"<h5 align='center'>Sorry no request found </h5>";
+    }
 }
 else if($table_to_be_selected == 'cust'){
 
+    
+    if(isset($_GET["dateFrom"]) && isset($_GET["dateTo"]))
+    {
+       
+     $dateFrom=$_GET["dateFrom"];
+     $dateTo=$_GET["dateTo"];   
+    }
     $sql = "SELECT rm.r_date, rm.cust_id, rc.r_status, a.rc_id, p.a_id, p.total_amount, s.s_name, p.p_date, 
-    concat(sp.sp_fname,' ',sp.sp_lname) as sp_name 
+    concat(sp.sp_fname,' ',sp.sp_lname) as sp_name
     from request_master as rm
     inner join request_child as rc on rc.rm_id=rm.rm_id 
     inner join accept as a on a.rc_id=rc.rc_id
@@ -102,13 +142,26 @@ else if($table_to_be_selected == 'cust'){
     inner join cust_details as c on c.cust_id=rm.cust_id
     inner join sp_details as sp on sp.sp_id=a.sp_id
     inner join service_details as s on s.s_id=sp.s_id
-    where c.cust_id=".$cust_id;
+    where rm.r_date > '". $dateFrom ."'and rm.r_date <'".$dateTo."' and 
+    c.cust_id=".$cust_id;
 
+
+    
     $result = $conn->query($sql);
-    if ($result->num_rows > 0)
-    {
-        echo '<div class="container">
+    echo '<div class="container">
         <h2>Requests of '. $cust_fname.'</h2>
+        <br>
+        <form action="#" method ="GET">
+        <center> &nbsp &nbsp &nbsp Date From : <input type="date" name="dateFrom" value="'.$dateFrom.'">
+        &nbsp &nbsp &nbsp
+     Date To : <input class="form-group" type="date" class="dateFilter" name="dateTo"  value="'.$dateTo.'">
+     &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+     <input type="hidden" value="'.$cust_fname.'" name="name">
+     <input type="hidden" value="'.$cust_id.'" name="cust_id">
+     <button type="submit" class="submit-btn" name="search">Search</button>
+     </center></form>
+     <br> <br>
+     
         <ul class="responsive-table">
           <li class="table-header">
             <div class="col col-1">ID</div>
@@ -120,9 +173,15 @@ else if($table_to_be_selected == 'cust'){
             <div class="col col-2">Payment Date</div>
             
           </li>';
-       
+    if ($result->num_rows > 0)
+    {
+        
+      
         while($row = $result->fetch_assoc()) 
             {
+    
+            if($row['r_date']>$dateFrom && $row['r_date'] < $dateTo ){
+                
             echo '<li class="table-row">
             <div class="col col-1" data-label="ID">'.$row['rc_id'].'</div>
             <div class="col col-2" data-label="Name">'. $row['s_name'].'</div>
@@ -131,13 +190,19 @@ else if($table_to_be_selected == 'cust'){
             <div class="col col-2" data-label="Phone">'. $row['sp_name'].'</div>
             <div class="col col-2" data-label="Phone">'. $row['total_amount'].'</div>
             <div class="col col-2" data-label="Phone">'. $row['p_date'].'</div>
-   
+                
             
           </li>';
-      
+          $total_sum_amount = $total_sum_amount + $row['total_amount'];
+          
             }
+            }
+            echo "<h5 align='right'>Total amount : Rs. $total_sum_amount/-</h5>";
             echo "</ul></div>";
             }
+    else {
+        echo"<h5 align='center'>Sorry no request found </h5>";
+    }
           } 
 
 $conn->close();

@@ -30,11 +30,15 @@
 
 <?php
 require_once "db-connection.php";
+
+$dateFrom=date("2021-01-01");
+$dateTo=date("2022-01-01");
+$total_sum_amount =0;
 $table_to_be_selected = $_GET["id"];
 
 if($table_to_be_selected == 'sp'){
     $sql = "SELECT * FROM sp_details inner join service_details on 
-    sp_details.s_id = service_details.s_id where sp_details.sp_status='Active'";
+    sp_details.s_id = service_details.s_id";
     $result = $conn->query($sql);
     if ($result->num_rows > 0)
     {
@@ -63,8 +67,17 @@ if($table_to_be_selected == 'sp'){
         <div class="col col-3" data-label="Email">'. $row['sp_username'].'</div>
         <div class="col col-2" data-label="Phone">'. $row['sp_phone'].'</div>
         <div class="col col-1" data-label="">
-        <button class="btn" onclick="confirmDeletion('.$row['sp_id'].',\'sp\')"> <i class="fas fa-trash-alt"></i></button></div>
-      </li>';
+        ';
+        if($row["sp_status"]=="Active")
+        {
+        echo '<button class="submit-btn2" onclick="confirmDeletion('.$row['sp_id'].',\'sp\')">Disable </button></div>';
+        }
+        else
+        {
+         echo' <button class="submit-btn3" onclick="confirmEnable('.$row['sp_id'].',\'sp\')"> Enable</button></div>';
+        }
+        echo'
+        </li>';
   
         }
         echo "</ul></div>";
@@ -89,7 +102,7 @@ else if($table_to_be_selected == 'cust'){
             <div class="col col-3">Address</div>
             <div class="col col-4">Email</div>
             <div class="col col-2">Phone</div>
-            <div class="col col-1"></div>
+            <div class="col col-1">Status</div>
             
           </li>';
        
@@ -102,16 +115,38 @@ else if($table_to_be_selected == 'cust'){
             '.$row['cust_dist'].', '.$row['cust_pincode'].'</div>
             <div class="col col-4" data-label="Email">'. $row['cust_username'].'</div>
             <div class="col col-2" data-label="Phone">'. $row['cust_phno'].'</div>
+            <div class="col col-1" data-label="">'. $row['cust_status'].'</div>
             <div class="col col-1" data-label="">
-            <button class="btn" onclick="confirmDeletion('.$row['cust_id'].',\'cust\')"> <i class="fas fa-trash-alt"></i></button></div>
-          </li>';
+            ';
+            if($row["cust_status"]=="Active")
+        {
+        echo '<button class="submit-btn2" onclick="confirmDeletion('.$row['cust_id'].',\'cust\')">Disable </button></div>';
+        }
+        else
+        {
+         echo' <button class="submit-btn3" onclick="confirmEnable('.$row['cust_id'].',\'cust\')"> Enable</button></div>';
+        }
+        echo'
+          </li> ';
       
             }
             echo "</ul></div>";
             }
-          } 
+            else
+        {
+        echo "0 results"; 
+        }
+          }
+          
+        
 else
 {
+  if(isset($_GET["dateFrom"]) && isset($_GET["dateTo"]))
+    {
+       
+     $dateFrom=$_GET["dateFrom"];
+     $dateTo=$_GET["dateTo"];   
+    }
   
     $sql= "select p.total_amount, p.p_id,p.p_date,a.a_id,a.rc_id, a.sp_id, rc.rm_id , rc.s_id, rm.cust_id,rm.r_date,
     c.cust_fname,c.cust_lname,sp.sp_fname,sp.sp_lname,s.s_name
@@ -123,7 +158,7 @@ else
       inner join service_details as s on s.s_id=rc.s_id
       inner join request_master as rm on rm.rm_id=rc.rm_id
       inner join cust_details as c on c.cust_id=rm.cust_id
-      order by rm.r_date";
+      where rm.r_date > '". $dateFrom ."'and rm.r_date <'".$dateTo."' order by rm.r_date ";
 
     $result = $conn->query($sql);
     if ($result->num_rows > 0)
@@ -131,6 +166,16 @@ else
        
         echo '<div class="container">
         <h2>TRANSACTIONS</h2>
+<BR>
+<form action="#" method="GET">
+        <center> &nbsp &nbsp &nbsp Date From : <input type="date" name="dateFrom" value="'.$dateFrom.'">
+        &nbsp &nbsp &nbsp
+     Date To : <input class="form-group" type="date" class="dateFilter" name="dateTo" value="'.$dateTo.'">
+     &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+     <input type="hidden" value="'.$table_to_be_selected.'" name="id">
+     <button class="submit-btn" name="search">Search</button>
+     </center></form>
+<BR>
         <ul class="responsive-table">
           <li class="table-header">
             <div class="col col-1">ID</div>
@@ -145,6 +190,7 @@ else
         
         while($row = $result->fetch_assoc()) 
             {
+              if($row['r_date']>$dateFrom && $row['r_date'] < $dateTo ){
             echo '<li class="table-row">
             <div class="col col-1" data-label="ID">'.$row['p_id'].'</div>
             <div class="col col-2" data-label="Name">'. $row['cust_fname'].' '.$row['cust_lname'].'</div>
@@ -152,14 +198,20 @@ else
             <div class="col col-2" data-label="Email">'. $row['s_name'].'</div>
             <div class="col col-1" data-label="Amount">'. $row['total_amount'].'</div>
             <div class="col col-2" data-label="Work Date">'. $row['r_date'].'</div>
-            <div class="col col-2" data-label="Payment Date">'. $row['p_date'].'</div>';
-
+            <div class="col col-2" data-label="Payment Date">'. $row['p_date'].'</div> </li>';
+            
+            $total_sum_amount = $total_sum_amount + $row['total_amount'];
             }
-            echo "</ul></div>";
+          }
+          echo "<h5 align='right'>Total amount : Rs. $total_sum_amount/-</h5>";
+          echo "</ul></div>"; 
             }
-            else {
-              echo "ERROR";
-            }
+    else {
+        echo"<h5 align='center'>Sorry no request found </h5>";
+    }
+           
+            
+            
   }
 
 $conn->close();
@@ -171,8 +223,15 @@ $conn->close();
 
 function confirmDeletion(id,user){
   console.log(user);
-  if(confirm('Do you want to delete this entry?')){
+  if(confirm('Do you want to disable this entry?')){
     window.location.href= "delete.php?"+user+"="+id;  
+  }
+}
+
+function confirmEnable(id,user){
+  console.log(user);
+  if(confirm('Do you want to enable this entry?')){
+    window.location.href= "enable.php?"+user+"="+id;  
   }
 }
 </script>

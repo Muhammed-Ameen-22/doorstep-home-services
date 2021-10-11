@@ -60,6 +60,47 @@ padding-right: 20px ;
         /* margin-left: 65px;
         margin-right: 20px; */
     }
+    .submit-btn2 {
+      color: #fff;
+      background-color: #f23e3e;
+      font-weight: 400;
+      height: 40px;
+      font-size: 14px;
+      border: none;
+      width: 200%;
+      border-radius: 40px;
+      text-transform: uppercase;
+      -webkit-transition: 0.2s all;
+      transition: 0.2s all;
+    }
+    .submit-btn3 {
+      color: #fff;
+      background-color: #02640d;
+      font-weight: 400;
+      height: 40px;
+      font-size: 14px;
+      border: none;
+      width: 200%;
+      border-radius: 40px;
+      text-transform: uppercase;
+      -webkit-transition: 0.2s all;
+      transition: 0.2s all;
+    }
+    
+    
+    .submit-btn {
+      color: #fff;
+      background-color: #f23e3e;
+      font-weight: 400;
+      height: 40px;
+      font-size: 14px;
+      border: none;
+      width: 10%;
+      border-radius: 40px;
+      text-transform: uppercase;
+      -webkit-transition: 0.2s all;
+      transition: 0.2s all;
+    }
 
    /*   .col-5{
       flex-basis:10%;

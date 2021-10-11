@@ -55,7 +55,7 @@ if(isset($_POST["login"])) {
             //     }
 
                 $sql =  "SELECT concat(cust_fname,' ',cust_lname) as name,cust_pass,cust_username,cust_id from cust_details 
-                where cust_username ='".$username."'";
+                where cust_username ='".$username."'and cust_status!='Inactive'";
 
                 $result=mysqli_query($conn,$sql);
        
@@ -75,8 +75,8 @@ if(isset($_POST["login"])) {
                     }
                 }
                 else{
-                    echo '<script>alert("Wrong Username"); location.href = "index.php";</script>';
-                    exit();
+                    echo '<script>alert("Please try again with a valid account"); location.href = "index.php";</script>';
+                    // exit();
                 }
             }
         }
@@ -460,9 +460,9 @@ if(isset($_POST["login"])) {
               <img src="assets/img/services/service-1.svg" alt="">
             </div>
             <div class="body">
-              <h5 class="text-secondary">SEO Consultancy</h5>
-              <p>We help you define your SEO objective & develop a realistic strategy with you</p>
-              <a href="service.html" class="btn btn-primary">Read More</a>
+              <h5 class="text-secondary">DHS Customer</h5>
+              <p>We help you find the service providers you need</p>
+              
             </div>
           </div>
         </div>
@@ -472,9 +472,9 @@ if(isset($_POST["login"])) {
               <img src="assets/img/services/service-2.svg" alt="">
             </div>
             <div class="body">
-              <h5 class="text-secondary">Content Marketing</h5>
-              <p>We help you define your SEO objective & develop a realistic strategy with you</p>
-              <a href="service.html" class="btn btn-primary">Read More</a>
+              <h5 class="text-secondary">DHS Service Provider</h5>
+              <p>We help you to find the customers requiring your service</p>
+             
             </div>
           </div>
         </div>
@@ -484,9 +484,9 @@ if(isset($_POST["login"])) {
               <img src="assets/img/services/service-3.svg" alt="">
             </div>
             <div class="body">
-              <h5 class="text-secondary">Keyword Research</h5>
-              <p>We help you define your SEO objective & develop a realistic strategy with you</p>
-              <a href="service.html" class="btn btn-primary">Read More</a>
+              <h5 class="text-secondary">Secure and Efficient</h5>
+              <p>We help you to have a secure and efficient connections</p>
+             
             </div>
           </div>
         </div>
