@@ -6,8 +6,8 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" >
 </head>    
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
 
+<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
 <div class="container-fluid">
     <a class="navbar-brand" href="#"> <img class="logo-img" src="images/logo.png"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
@@ -27,13 +27,14 @@
 </div>
 </nav>
 
-  
+
 <?php
 require_once "db-connection.php";
 $table_to_be_selected = $_GET["id"];
 
 if($table_to_be_selected == 'sp'){
-    $sql = "SELECT * FROM sp_details inner join service_details on sp_details.s_id = service_details.s_id where sp_details.sp_status='Active'";
+    $sql = "SELECT * FROM sp_details inner join service_details on 
+    sp_details.s_id = service_details.s_id where sp_details.sp_status='Active'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0)
     {
@@ -56,7 +57,7 @@ if($table_to_be_selected == 'sp'){
         echo '<li class="table-row">
         <div class="col col-1" data-label="ID">'.$row['sp_id'].'</div>
         <div class="col col-2" data-label="Service">'.$row['s_name'].'</div>
-        <div class="col col-2" data-label="Name">'. $row['sp_fname'].' '.$row['sp_lname'].'</div>
+        <div class="col col-2" data-label="Name"> <a href="admin-cust-details.php?sp_id='.$row['sp_id'].'&name='. $row['sp_fname'].' '.$row['sp_lname'].'">'. $row['sp_fname'].' '.$row['sp_lname'].'</a></div>
         <div class="col col-3" data-label="Address">'.$row['sp_house'].', '.$row['sp_city'].', 
         '.$row['sp_district'].', '.$row['sp_pincode'].'</div>
         <div class="col col-3" data-label="Email">'. $row['sp_username'].'</div>
@@ -96,7 +97,7 @@ else if($table_to_be_selected == 'cust'){
             {
             echo '<li class="table-row">
             <div class="col col-1" data-label="ID">'.$row['cust_id'].'</div>
-            <div class="col col-2" data-label="Name">'. $row['cust_fname'].' '.$row['cust_lname'].'</div>
+            <div class="col col-2" data-label="Name"><a href="admin-cust-details.php?cust_id='.$row['cust_id'].'&name='. $row['cust_fname'].' '.$row['cust_lname'].'">'. $row['cust_fname'].' '.$row['cust_lname'].'</a></div>
             <div class="col col-3" data-label="Address">'.$row['cust_house'].', '.$row['cust_city'].', 
             '.$row['cust_dist'].', '.$row['cust_pincode'].'</div>
             <div class="col col-4" data-label="Email">'. $row['cust_username'].'</div>

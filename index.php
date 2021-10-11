@@ -122,6 +122,16 @@ if(isset($_POST["login"])) {
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Home | DHS</title>
+
+    <link rel="stylesheet" href="assets/css/maicons.css">
+    
+
+<link rel="stylesheet" href="assets/css/bootstrap.css">
+
+<link rel="stylesheet" href="assets/vendor/animate/animate.css">
+
+<link rel="stylesheet" href="assets/css/theme.css">
+
     <link href="stylesheets/bootstrap.css" rel="stylesheet">
     <link href="stylesheets/style.css" rel="stylesheet">
     <link href="stylesheets/animate.min.css" rel="stylesheet">
@@ -189,9 +199,13 @@ if(isset($_POST["login"])) {
 			</div>
         </div>
     </div> -->
-    
-    <div class=circle>
-    <div id="carouselExampleIndicators" class="my-carousel carousel slide"  data-ride="carousel">
+    <br><br><br> <br>
+
+    <div class="container">
+      <!-- <div class="page-banner home-banner"> -->
+        <div class="row align-items-center flex-wrap-reverse h-100">
+          <div class="col-md-12 py-10 wow fadeInLeft">
+          <div id="carouselExampleIndicators" class="my-carousel carousel slide"  data-ride="carousel">
         <ol class="carousel-indicators">
             <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
             <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
@@ -199,7 +213,7 @@ if(isset($_POST["login"])) {
         </ol>
         <div class="carousel-inner">
             <div class="carousel-item active" data-interval="2000">
-                <img class="d-block w-100" src="images/background1.jpg" alt="First slide">
+                <img class="d-block w-100 img-fluid" src="images/background1.jpg" alt="First slide">
                 <div class="carousel-caption">
                     <!-- <h2 class="carousel-head">SERVICE AT YOUR DOORSTEP</h2> -->
                     <!-- <a href="" class="button-login btn btn-primary" data-toggle="modal" data-target="#modalLoginForm" >
@@ -212,7 +226,7 @@ if(isset($_POST["login"])) {
                 </div>
             </div>
             <div class="carousel-item" data-interval="2000">
-                <img class="d-block w-100" src="images/background4.png" alt="Second slide">
+                <img class="d-block w-100 img-fluid" src="images/background4.png" alt="Second slide">
                 <div class="carousel-caption">
                     <!-- <a href="" class="button-login btn btn-primary" data-toggle="modal" data-target="#modalLoginForm" >Login</a> -->
                     <div class="col-md-4">
@@ -223,7 +237,7 @@ if(isset($_POST["login"])) {
                 </div>
             </div>
             <div class="carousel-item" data-interval="2000">
-                <img class="d-block w-100" src="images/background2.png" alt="Third slide">
+                <img class="d-block w-100 img-fluid" src="images/background2.png" alt="Third slide">
                 <div class="carousel-caption">
                     <!-- <a href="" class="button-login btn btn-primary" data-toggle="modal" data-target="#modalLoginForm" >Login</a> -->
                     <div class="col-md-4">
@@ -292,6 +306,16 @@ if(isset($_POST["login"])) {
         </form>
         <div class="sign-txt">Not yet member? <a href="registration.php">Signup now</a></div>
       </div>
+           
+          </div>
+         
+        </div>
+        <a href="#service" class="btn-scroll" data-role="smoothscroll"><span class="mai-arrow-down"></span></a>
+      </div>
+    <!-- </div> -->
+    
+    <div class=circle>
+    
 
       <!-- </div> -->
 
@@ -312,22 +336,164 @@ if(isset($_POST["login"])) {
             
         </div>
     </div>
-    <hr class="my-4" id="contact">
-    <div class="container-fluid padding fadeInUp">
-        <div class="row  text-center padding">
-            <div class="col-12">
-                <h2>Connect</h2>
-            </div>
-            <div class="col-12 social padding">
-                <a href="#"><i class="fab fa-facebook"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-google-plus-g"></i></a>
-            </div>
 
+    <div class="page-section bg-light">
+    <div class="container">
+      <div class="text-center wow fadeInUp">
+        <div class="subhead" id="service" name="service">Our services</div>
+        <h2 class="title-section">SERVICES WE PROVIDE</h2>
+        <div class="divider mx-auto"></div>
+      </div>
+
+        <div class="row">
+          <div class="col-sm-6 col-lg-4 col-xl-3 py-3 wow zoomIn">
+            <div class="features">
+              <div class="header mb-3">
+                <span class="mai-business"></span>
+              </div>
+              <h5>Electrical works</h5>
+              <p>We analyse your website's structure, internal architecture & other key</p>
+            </div>
+          </div>
+          <div class="col-sm-6 col-lg-4 col-xl-3 py-3 wow zoomIn">
+            <div class="features">
+              <div class="header mb-3">
+                <span class="mai-business"></span>
+              </div>
+              <h5>Plumbing</h5>
+              <p>We analyse your website's structure, internal architecture & other key</p>
+            </div>
+          </div>
+          <div class="col-sm-6 col-lg-4 col-xl-3 py-3 wow zoomIn">
+            <div class="features">
+              <div class="header mb-3">
+                <span class="mai-business"></span>
+              </div>
+              <h5>Carpentry</h5>
+              <p>We analyse your website's structure, internal architecture & other key</p>
+            </div>
+          </div>
+          <div class="col-sm-6 col-lg-4 col-xl-3 py-3 wow zoomIn">
+            <div class="features">
+              <div class="header mb-3">
+                <span class="mai-business"></span>
+              </div>
+              <h5>Painting works</h5>
+              <p>We analyse your website's structure, internal architecture & other key</p>
+            </div>
+          </div>
+          <div class="col-sm-6 col-lg-4 col-xl-3 py-3 wow zoomIn">
+            <div class="features">
+              <div class="header mb-3">
+                <span class="mai-business"></span>
+              </div>
+              <h5>Mechanical works</h5>
+              <p>We analyse your website's structure, internal architecture & other key</p>
+            </div>
+          </div>
+          <div class="col-sm-6 col-lg-4 col-xl-3 py-3 wow zoomIn">
+            <div class="features">
+              <div class="header mb-3">
+                <span class="mai-business"></span>
+              </div>
+              <h5>Car cleaning</h5>
+              <p>We analyse your website's structure, internal architecture & other key</p>
+            </div>
+          </div>
+          <div class="col-sm-6 col-lg-4 col-xl-3 py-3 wow zoomIn">
+            <div class="features">
+              <div class="header mb-3">
+                <span class="mai-business"></span>
+              </div>
+              <h5>House works</h5>
+              <p>We analyse your website's structure, internal architecture & other key</p>
+            </div>
+          </div>
+          <div class="col-sm-6 col-lg-4 col-xl-3 py-3 wow zoomIn">
+            <div class="features">
+              <div class="header mb-3">
+                <span class="mai-business"></span>
+              </div>
+              <h5>Marble works</h5>
+              <p>We analyse your website's structure, internal architecture & other key</p>
+            </div>
+          </div>
         </div>
-    </div>
-    <footer>
+
+    </div> <!-- .container -->
+  </div>
+
+  <div class="page-section banner-info">
+    <div class="wrap bg-image" style="background-image: url(../assets/img/bg_pattern.svg);">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-6 py-3 pr-lg-5 wow fadeInUp">
+            <h2 class="title-section">DHS to connect you with the <br> workers</h2>
+            <div class="divider"></div>
+            <p>We have experienced workers and connect them easily for your needs.</p>
+            
+            <ul class="theme-list theme-list-light text-white">
+              <li>
+                <div class="h5">How DHS works?</div>
+                <p>Both the customer and the service providers can register in our portal</p>
+              
+                <p>Customer can request for the specific service and the service provider can accept the work if he needs.</p>
+              </li>
+            </ul>
+          </div>
+          <div class="col-lg-6 py-3 wow fadeInRight">
+            <div class="img-fluid text-center">
+              <img src="assets/img/banner_image_2.svg" alt="">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> <!-- .wrap -->
+  </div>
+
+  <div class="page-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="card-service wow fadeInUp">
+            <div class="header">
+              <img src="assets/img/services/service-1.svg" alt="">
+            </div>
+            <div class="body">
+              <h5 class="text-secondary">SEO Consultancy</h5>
+              <p>We help you define your SEO objective & develop a realistic strategy with you</p>
+              <a href="service.html" class="btn btn-primary">Read More</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="card-service wow fadeInUp">
+            <div class="header">
+              <img src="assets/img/services/service-2.svg" alt="">
+            </div>
+            <div class="body">
+              <h5 class="text-secondary">Content Marketing</h5>
+              <p>We help you define your SEO objective & develop a realistic strategy with you</p>
+              <a href="service.html" class="btn btn-primary">Read More</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="card-service wow fadeInUp">
+            <div class="header">
+              <img src="assets/img/services/service-3.svg" alt="">
+            </div>
+            <div class="body">
+              <h5 class="text-secondary">Keyword Research</h5>
+              <p>We help you define your SEO objective & develop a realistic strategy with you</p>
+              <a href="service.html" class="btn btn-primary">Read More</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> <!-- .container -->
+  </div>
+    <!-- <footer>
         <div class="container-fluid padding">
             <div class="row text-center">
                 <div class="col-md-6">
@@ -351,7 +517,56 @@ if(isset($_POST["login"])) {
 
         </div>
     </footer>
-    
+     -->
+     <footer class="page-footer bg-image" style="background-image: url(assets/img/world_pattern.svg);">
+    <div class="container">
+      <div class="row mb-5">
+        <div class="col-lg-4 py-4">
+          <h3>DHS</h3>
+          <p>Portal to connect the workers with the customers.</p>
+
+          <div class="social-media-button">
+            <a href="#"><span class="mai-logo-facebook-f"></span></a>
+            <a href="#"><span class="mai-logo-twitter"></span></a>
+            <a href="#"><span class="mai-logo-google-plus-g"></span></a>
+            <a href="#"><span class="mai-logo-instagram"></span></a>
+            <a href="#"><span class="mai-logo-youtube"></span></a>
+          </div>
+        </div>
+        <div class="col-lg-4 py-4">
+          <h5>Contact Us</h5>
+          <p>22/A24 Skyline Towers,Palluruthy, Kochi</p>
+          <p>Ernakulam, Kerala</p>
+          <a href="#" class="footer-link">+91 8089 3734 39</a>
+          <a href="#" class="footer-link">dhsofficial@gmail.com</a>
+        </div>
+        <div class="col-lg-4 py-4">
+         
+          <ul class="footer-menu">
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Career</a></li>
+            <li><a href="#">Advertise</a></li>
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#">Help & Support</a></li>
+          </ul>
+        </div>
+        
+        
+      </div>
+
+      <p class="text-center" id="copyright">Copyright &copy; 2020.</p>
+    </div>
+  </footer>
+
+<script src="assets/js/jquery-3.5.1.min.js"></script>
+
+<script src="assets/js/bootstrap.bundle.min.js"></script>
+
+<script src="assets/js/google-maps.js"></script>
+
+<script src="assets/vendor/wow/wow.min.js"></script>
+
+<script src="../assets/js/theme.js"></script>
     <script src="javascript/logincheck.js" type="text/javascript"></script>
 </body>
 
