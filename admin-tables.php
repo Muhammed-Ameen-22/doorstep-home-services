@@ -100,7 +100,7 @@ else if($table_to_be_selected == 'cust'){
             <div class="col col-1">ID</div>
             <div class="col col-2">Name</div>
             <div class="col col-3">Address</div>
-            <div class="col col-4">Email</div>
+            <div class="col col-2">Email</div>
             <div class="col col-2">Phone</div>
             <div class="col col-1">Status</div>
             
@@ -113,7 +113,7 @@ else if($table_to_be_selected == 'cust'){
             <div class="col col-2" data-label="Name"><a href="admin-cust-details.php?cust_id='.$row['cust_id'].'&name='. $row['cust_fname'].' '.$row['cust_lname'].'">'. $row['cust_fname'].' '.$row['cust_lname'].'</a></div>
             <div class="col col-3" data-label="Address">'.$row['cust_house'].', '.$row['cust_city'].', 
             '.$row['cust_dist'].', '.$row['cust_pincode'].'</div>
-            <div class="col col-4" data-label="Email">'. $row['cust_username'].'</div>
+            <div class="col col-2" data-label="Email">'. $row['cust_username'].'</div>
             <div class="col col-2" data-label="Phone">'. $row['cust_phno'].'</div>
             <div class="col col-1" data-label="">'. $row['cust_status'].'</div>
             <div class="col col-1" data-label="">
@@ -158,7 +158,7 @@ else
       inner join service_details as s on s.s_id=rc.s_id
       inner join request_master as rm on rm.rm_id=rc.rm_id
       inner join cust_details as c on c.cust_id=rm.cust_id
-      where rm.r_date > '". $dateFrom ."'and rm.r_date <'".$dateTo."' order by rm.r_date ";
+      where rm.r_date >='". $dateFrom ."'and rm.r_date <='".$dateTo."' order by rm.r_date ";
 
     $result = $conn->query($sql);
     if ($result->num_rows > 0)
@@ -223,9 +223,25 @@ $conn->close();
 
 function confirmDeletion(id,user){
   console.log(user);
-  if(confirm('Do you want to disable this entry?')){
-    window.location.href= "delete.php?"+user+"="+id;  
-  }
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", "delete.php", true);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  var reasonForRejection = prompt("Please enter the reason for disabling!");
+  xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            
+            console.log("Success");
+          window.location.href ="admin-tables.php?id="+user;
+        }
+    };
+  xhr.send(JSON.stringify({
+    reason: reasonForRejection,
+    id: id,
+    user: user
+}));
+  // if(confirm('Do you want to disable this entry?')){
+  //   window.location.href= "delete.php?"+user+"="+id;  
+  // }
 }
 
 function confirmEnable(id,user){

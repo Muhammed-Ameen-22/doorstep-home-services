@@ -63,7 +63,7 @@ if($table_to_be_selected == 'sp'){
     inner join payment as p on p.a_id=a.a_id 
     inner join cust_details as c on c.cust_id=rm.cust_id
     inner join sp_details as sp on sp.sp_id=a.sp_id
-    where rm.r_date > '". $dateFrom ."'and rm.r_date <'".$dateTo."' and  
+    where rm.r_date >= '". $dateFrom ."'and rm.r_date <='".$dateTo."' and  
     sp.sp_id=".$sp_id;
 
     $result = $conn->query($sql);
@@ -142,7 +142,7 @@ else if($table_to_be_selected == 'cust'){
     inner join cust_details as c on c.cust_id=rm.cust_id
     inner join sp_details as sp on sp.sp_id=a.sp_id
     inner join service_details as s on s.s_id=sp.s_id
-    where rm.r_date > '". $dateFrom ."'and rm.r_date <'".$dateTo."' and 
+    where rm.r_date >= '". $dateFrom ."'and rm.r_date <='".$dateTo."' and 
     c.cust_id=".$cust_id;
 
 
