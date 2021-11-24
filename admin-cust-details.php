@@ -4,6 +4,12 @@
 <link rel="stylesheet" href="stylesheets/admin-tables.css">
 <link href="stylesheets/bootstrap.css" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" >
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"
+    integrity="sha256-c9vxcXyAG4paArQG3xk6DjyW/9aHxai2ef9RpMWO44A=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
+<script src ="javascript/downloadPDF.js"> </script>
 </head>    
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
@@ -20,7 +26,7 @@
             </li>
            
             <li class="nav-item">
-                <a class="nav-link" href="index.php"> Logout</a>
+                <a class="nav-link" href="admin-login.php"> Logout</a>
             </li>
         </ul>
     </div>
@@ -70,7 +76,7 @@ if($table_to_be_selected == 'sp'){
     echo '<div class="container">
      <h2>Works of '. $sp_fname.'</h2>
         <br>
-        <form action="#" method="GET">
+        <form action="#" method="GET" id="ignore">
      <center>
          &nbsp &nbsp &nbsp Date From : <input type="date" name="dateFrom" value="'.$dateFrom.'">
         &nbsp &nbsp &nbsp
@@ -85,6 +91,7 @@ if($table_to_be_selected == 'sp'){
      <br> <br>
      <ul class="responsive-table">
        <li class="table-header">
+       <div class="col col-1">Sl No.</div>
          <div class="col col-1">ID</div>
          <div class="col col-3">Requested By</div>
          <div class="col col-2">Req Date</div>
@@ -97,13 +104,14 @@ if($table_to_be_selected == 'sp'){
     if ($result->num_rows > 0)
     {
      
-
+      $serial_num=1;
     while($row = $result->fetch_assoc()) 
         {
 
-            if($row['r_date']>$dateFrom && $row['r_date'] < $dateTo ){
-
+            if($row['r_date']>=$dateFrom && $row['r_date'] <= $dateTo ){
+              
             echo '<li class="table-row">
+            <div class="col col-1" data-label="ID">'.$serial_num.'</div>
             <div class="col col-1" data-label="ID">'.$row['rc_id'].'</div>
             <div class="col col-3" data-label="Name">'. $row['cust_name'].'</div>
             <div class="col col-2" data-label="Address">'.$row['r_date'].'</div>
@@ -112,7 +120,7 @@ if($table_to_be_selected == 'sp'){
             <div class="col col-2" data-label="Phone">'. $row['p_date'].'</div>
       </li>';
       $total_sum_amount = $total_sum_amount + $row['total_amount'];
-  
+              $serial_num++;
         }
     }
 
@@ -142,13 +150,14 @@ else if($table_to_be_selected == 'cust'){
     inner join cust_details as c on c.cust_id=rm.cust_id
     inner join sp_details as sp on sp.sp_id=a.sp_id
     inner join service_details as s on s.s_id=sp.s_id
-    where rm.r_date >= '". $dateFrom ."'and rm.r_date <='".$dateTo."' and 
+    where rm.r_date >= '". $dateFrom ."' and rm.r_date <='".$dateTo."' and 
     c.cust_id=".$cust_id;
+ 
 
 
     
     $result = $conn->query($sql);
-    echo '<div class="container">
+    echo '<div class="container" id="table-details">
         <h2>Requests of '. $cust_fname.'</h2>
         <br>
         <form action="#" method ="GET">
@@ -160,12 +169,15 @@ else if($table_to_be_selected == 'cust'){
      <input type="hidden" value="'.$cust_id.'" name="cust_id">
      <button type="submit" class="submit-btn" name="search">Search</button>
      </center></form>
+     
+     <button class="btn btn-info" id="generatePDF" onclick="generatePDF()" style="float:right;">Download PDF</button>
      <br> <br>
      
         <ul class="responsive-table">
           <li class="table-header">
+          <div class="col col-1">Sl No.</div>
             <div class="col col-1">ID</div>
-            <div class="col col-2">Service</div>
+            <div class="col col-new">Service</div>
             <div class="col col-2">Requested Date</div>
             <div class="col col-2">Req Status</div>
             <div class="col col-2">Accepted By</div>
@@ -175,16 +187,17 @@ else if($table_to_be_selected == 'cust'){
           </li>';
     if ($result->num_rows > 0)
     {
-        
+      $serial_num=1;
       
         while($row = $result->fetch_assoc()) 
             {
     
-            if($row['r_date']>$dateFrom && $row['r_date'] < $dateTo ){
+            if($row['r_date']>=$dateFrom && $row['r_date'] <= $dateTo ){
                 
             echo '<li class="table-row">
+            <div class="col col-1" data-label="ID">'.$serial_num.'</div>
             <div class="col col-1" data-label="ID">'.$row['rc_id'].'</div>
-            <div class="col col-2" data-label="Name">'. $row['s_name'].'</div>
+            <div class="col col-new" data-label="Name">'. $row['s_name'].'</div>
             <div class="col col-2" data-label="Address">'.$row['r_date'].'</div>
             <div class="col col-2" data-label="Email">'. $row['r_status'].'</div>
             <div class="col col-2" data-label="Phone">'. $row['sp_name'].'</div>
@@ -194,7 +207,7 @@ else if($table_to_be_selected == 'cust'){
             
           </li>';
           $total_sum_amount = $total_sum_amount + $row['total_amount'];
-          
+          $serial_num++;
             }
             }
             echo "<h5 align='right'>Total amount : Rs. $total_sum_amount/-</h5>";
@@ -218,5 +231,37 @@ function confirmDeletion(id,user){
     window.location.href= "delete.php?"+user+"="+id;  
   }
 }
+
+// var doc = new jsPDF();
+// // var specialElementHandlers = {
+// //     '#editor': function (element, renderer) {
+// //         return true;
+// //     },
+// //     '#ignore': function (element, renderer) {
+// //     return true;
+// //   }
+// // };
+
+// //margins.left, // x coord   margins.top, { // y coord
+// $('#generatePDF').click(function () {
+
+  
+
+//   var pdf = new jsPDF('p', 'pt', 'letter');
+//  pdf.addHTML($('.container')[1], function () 
+//   { 
+//      pdf.save('Test.pdf');
+//  });
+
+//     //  doc.fromHTML($('.container').html(), 15, 15, {
+//     //     'width': 700,
+//     //     'elementHandlers': specialElementHandlers
+//     // });
+   
+//     // doc.save('sample_file.pdf');
+// });
+
+
+
 </script>
 </html>

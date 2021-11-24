@@ -75,9 +75,22 @@ if(isset($_POST["login"])) {
                     }
                 }
                 else{
-                    echo '<script>alert("Please try again with a valid account"); location.href = "index.php";</script>';
+                  $sql = "SELECT cust_remark.remark as remark from cust_remark inner join cust_details 
+                  on cust_remark.cust_id = cust_details.cust_id where cust_details.cust_username = '".$username."'";
+        
+                   $result=mysqli_query($conn,$sql);
+                   
+                   if(mysqli_num_rows($result)>0){  
+                    $row = mysqli_fetch_array($result);
+                    $remark = $row['remark'];
+                   
+                    echo '<script>alert("Your account has been revoked due to : '.$remark.'"); location.href = "index.php";</script>'; 
+                   }
+                   else{
+                    echo '<script>alert("Please try again with a valid account"); ';
                     // exit();
                 }
+              }
             }
         }
         else if($userType=="sp")
@@ -537,7 +550,7 @@ if(isset($_POST["login"])) {
           <h5>Contact Us</h5>
           <p>22/A24 Skyline Towers,Palluruthy, Kochi</p>
           <p>Ernakulam, Kerala</p>
-          <a href="#" class="footer-link">+91 8089 3734 39</a>
+          <a href="#" class="footer-link">+91 8089 3734 39</a><br>
           <a href="#" class="footer-link">dhsofficial@gmail.com</a>
         </div>
         <div class="col-lg-4 py-4">
