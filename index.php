@@ -116,8 +116,20 @@ if(isset($_POST["login"])) {
                     }
                 }
                 else{
+                  $sql = "SELECT sp_remark.remark as remark from sp_remark inner join sp_details 
+                  on sp_remark.sp_id = sp_details.sp_id where sp_details.sp_username = '".$username."'";
+                  
+                   $result=mysqli_query($conn,$sql);
+                   
+                   if(mysqli_num_rows($result)>0){  
+                    $row = mysqli_fetch_array($result);
+                    $remark = $row['remark'];
+                   
+                    echo '<script>alert("Your account has been revoked due to : '.$remark.'"); location.href = "index.php";</script>'; 
+                   }
+                   else{
                     echo '<script>alert("Please try again with a valid account"); location.href = "index.php";</script>';
-                    
+                   }
                     //exit();
                 }
         } 

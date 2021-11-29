@@ -15,7 +15,9 @@ require_once "db-connection.php";
     else if (isset($_GET['sp']))
     {
         $enable_service_provider = "update  sp_details set sp_status='Active' where sp_id=".$_GET['sp'];
+        $delete_sp_remark = "delete from sp_remark where sp_id= ".$_GET['sp'];
         if(mysqli_query($conn, $enable_service_provider )){
+            mysqli_query($conn,$delete_sp_remark);
             header("location: admin-tables.php?id=sp");
         } else{
             echo "ERROR: Could not able to execute $enable_service_provider. " . mysqli_error($conn);
