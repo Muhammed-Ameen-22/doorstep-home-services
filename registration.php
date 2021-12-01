@@ -17,8 +17,8 @@ if(isset($_POST["submit"])) {
     if($value=="cust")
     {
         $sql = "INSERT INTO cust_details(cust_fname,cust_lname,cust_house,cust_city,cust_dist,cust_pincode,
-        cust_username,cust_pass,cust_phno) 
-        VALUES('$fname','$lname','$house', '$city', '$district','$pincode', '$email', '$password', '$phno')";
+        cust_username,cust_pass,cust_phno,cust_status) 
+        VALUES('$fname','$lname','$house', '$city', '$district','$pincode', '$email', '$password', '$phno','Active')";
         if(mysqli_query($conn, $sql)){
           echo '<script>if(confirm("Registration Successfull, Do you want to login?")){
             window.location.href= "index.php";  

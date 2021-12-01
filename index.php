@@ -377,7 +377,7 @@ if(isset($_POST["login"])) {
                 <span class="mai-business"></span>
               </div>
               <h5>Electrical works</h5>
-              <p>We analyse your website's structure, internal architecture & other key</p>
+              <!-- <p>We analyse your website's structure, internal architecture & other key</p> -->
             </div>
           </div>
           <div class="col-sm-6 col-lg-4 col-xl-3 py-3 wow zoomIn">
@@ -386,7 +386,7 @@ if(isset($_POST["login"])) {
                 <span class="mai-business"></span>
               </div>
               <h5>Plumbing</h5>
-              <p>We analyse your website's structure, internal architecture & other key</p>
+              <!-- <p>We analyse your website's structure, internal architecture & other key</p> -->
             </div>
           </div>
           <div class="col-sm-6 col-lg-4 col-xl-3 py-3 wow zoomIn">
@@ -395,7 +395,7 @@ if(isset($_POST["login"])) {
                 <span class="mai-business"></span>
               </div>
               <h5>Carpentry</h5>
-              <p>We analyse your website's structure, internal architecture & other key</p>
+              <!-- <p>We analyse your website's structure, internal architecture & other key</p> -->
             </div>
           </div>
           <div class="col-sm-6 col-lg-4 col-xl-3 py-3 wow zoomIn">
@@ -404,7 +404,7 @@ if(isset($_POST["login"])) {
                 <span class="mai-business"></span>
               </div>
               <h5>Painting works</h5>
-              <p>We analyse your website's structure, internal architecture & other key</p>
+              <!-- <p>We analyse your website's structure, internal architecture & other key</p> -->
             </div>
           </div>
           <div class="col-sm-6 col-lg-4 col-xl-3 py-3 wow zoomIn">
@@ -413,7 +413,7 @@ if(isset($_POST["login"])) {
                 <span class="mai-business"></span>
               </div>
               <h5>Mechanical works</h5>
-              <p>We analyse your website's structure, internal architecture & other key</p>
+              <!-- <p>We analyse your website's structure, internal architecture & other key</p> -->
             </div>
           </div>
           <div class="col-sm-6 col-lg-4 col-xl-3 py-3 wow zoomIn">
@@ -422,7 +422,7 @@ if(isset($_POST["login"])) {
                 <span class="mai-business"></span>
               </div>
               <h5>Car cleaning</h5>
-              <p>We analyse your website's structure, internal architecture & other key</p>
+              <!-- <p>We analyse your website's structure, internal architecture & other key</p> -->
             </div>
           </div>
           <div class="col-sm-6 col-lg-4 col-xl-3 py-3 wow zoomIn">
@@ -431,7 +431,7 @@ if(isset($_POST["login"])) {
                 <span class="mai-business"></span>
               </div>
               <h5>House works</h5>
-              <p>We analyse your website's structure, internal architecture & other key</p>
+              <!-- <p>We analyse your website's structure, internal architecture & other key</p> -->
             </div>
           </div>
           <div class="col-sm-6 col-lg-4 col-xl-3 py-3 wow zoomIn">
@@ -440,7 +440,7 @@ if(isset($_POST["login"])) {
                 <span class="mai-business"></span>
               </div>
               <h5>Marble works</h5>
-              <p>We analyse your website's structure, internal architecture & other key</p>
+              <!-- <p>We analyse your website's structure, internal architecture & other key</p> -->
             </div>
           </div>
         </div>
